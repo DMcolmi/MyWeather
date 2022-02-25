@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyMeteo</string>
+    <string name="my_meteo">My Meteo</string>
+    <string name="add_location">Add location</string>
 </resources>
