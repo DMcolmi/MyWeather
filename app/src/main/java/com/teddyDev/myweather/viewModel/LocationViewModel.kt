@@ -3,6 +3,7 @@ package com.teddyDev.myweather.viewModel
 import android.location.Location
 import androidx.lifecycle.*
 import com.teddyDev.myweather.database.LocationDAO
+import com.teddyDev.myweather.database.LocationEntity
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
@@ -10,9 +11,9 @@ import java.lang.IllegalArgumentException
 
 class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
-    val locationList : LiveData<List<Location>> = locationDAO.getAllLocations().asLiveData()
+    val locationList : LiveData<List<LocationEntity>> = locationDAO.getAllLocations().asLiveData()
 
-    fun saveLocation(location: Location){
+    fun saveLocation(location: LocationEntity){
         viewModelScope.launch {
             locationDAO.insertNewLocation(location)
         }

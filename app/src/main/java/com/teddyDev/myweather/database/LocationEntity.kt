@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "t_location")
 data class LocationEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = -1,
 
-    @NotNull @ColumnInfo(name = "location")
+    @ColumnInfo(name = "location")
     val location: String
 )
 

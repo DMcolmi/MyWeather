@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeatherT"
-        tools:replace="android:theme">
+        android:name="com.teddyDev.myweather.WeatherApplication">
         <activity
             android:name="com.teddyDev.myweather.MainActivity"
             android:exported="true">

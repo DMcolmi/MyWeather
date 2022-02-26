@@ -1,6 +1,5 @@
 package com.teddyDev.myweather.database
 
-import android.location.Location
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface LocationDAO {
 
     @Insert
-    suspend fun insertNewLocation(location: Location)
+    fun insertNewLocation(location: LocationEntity)
 
     @Query("select * from t_location order by id ASC")
-    fun getAllLocations(): Flow<List<Location>>
+    fun getAllLocations(): Flow<List<LocationEntity>>
 
 }

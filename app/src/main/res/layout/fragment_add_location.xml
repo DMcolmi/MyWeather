@@ -1,79 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/add_location_card"
+    <data>
+        <variable
+            name="add_location_frg"
+            type="com.teddyDev.myweather.AddLocationFragment" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_padding">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/add_location_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/standard_padding">
-
-                <TextView
-                    android:id="@+id/add_location_title"
-                    style="@style/TextAppearance.Material3.TitleLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_location"></TextView>
-
-                <TextView
-                    android:id="@+id/add_location_subtitle"
-                    style="@style/TextAppearance.Material3.TitleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_location_subtitle"></TextView>
-
-            </LinearLayout>
+            android:layout_margin="@dimen/standard_padding">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/standard_padding"
                 android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_text_field_search_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="clear_text"
-                    app:startIconContentDescription="@string/add_location"
-                    app:startIconDrawable="@drawable/ic_baseline_search_24"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/standard_padding">
+
+                    <TextView
+                        android:id="@+id/add_location_title"
+                        style="@style/TextAppearance.Material3.TitleLarge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"/>
+                        android:text="@string/add_location"></TextView>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/add_location_subtitle"
+                        style="@style/TextAppearance.Material3.TitleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_location_subtitle"></TextView>
 
-                <Button
-                    android:layout_width="wrap_content"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/add_new_location_button"
-                    android:text="@string/add_location"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    app:icon="@drawable/ic_baseline_add_24"/>
+                    android:orientation="vertical"
+                    android:padding="@dimen/standard_padding">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_text_field_search_location"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="clear_text"
+                        app:startIconContentDescription="@string/add_location"
+                        app:startIconDrawable="@drawable/ic_baseline_search_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/add_new_location_button"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_location"
+                        app:icon="@drawable/ic_baseline_add_24" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    </com.google.android.material.card.MaterialCardView>
-
-
-</FrameLayout>
+    </FrameLayout>
+</layout>
