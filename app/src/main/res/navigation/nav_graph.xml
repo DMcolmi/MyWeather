@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/meteoListFragment"
-        android:name="com.teddyDev.mymeteo.MeteoListFragment"
+        android:name="com.teddyDev.myweather.WeatherListFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_meteo_list">
+        tools:layout="@layout/weather_meteo_list">
         <action
             android:id="@+id/action_meteoListFragment_to_addLocationFragment"
             app:destination="@id/addLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLocationFragment"
-        android:name="com.teddyDev.mymeteo.AddLocationFragment"
+        android:name="com.teddyDev.myweather.AddLocationFragment"
         android:label="@string/add_location"
         tools:layout="@layout/fragment_add_location" >
         <action

@@ -1,4 +1,4 @@
-package com.teddyDev.mymeteo
+package com.teddyDev.myweather
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

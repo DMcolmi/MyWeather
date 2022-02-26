@@ -1,4 +1,4 @@
-package com.teddyDev.mymeteo
+package com.teddyDev.myweather
 
 import org.junit.Test
 

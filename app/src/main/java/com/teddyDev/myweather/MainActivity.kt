@@ -1,4 +1,4 @@
-package com.teddyDev.mymeteo
+package com.teddyDev.myweather
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

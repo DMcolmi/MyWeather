@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">MyMeteo</string>
-    <string name="my_meteo">My Meteo</string>
+    <string name="app_name">MyWeather</string>
+    <string name="my_meteo">My Weather</string>
     <string name="add_location">Add location</string>
+    <string name="add_location_subtitle">Search for a new location to add in the weather feed:</string>
 </resources>

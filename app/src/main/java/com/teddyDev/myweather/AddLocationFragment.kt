@@ -1,4 +1,4 @@
-package com.teddyDev.mymeteo
+package com.teddyDev.myweather
 
 import android.os.Bundle
 import android.view.LayoutInflater
