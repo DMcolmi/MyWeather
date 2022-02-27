@@ -13,7 +13,11 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     val locationList : LiveData<List<LocationEntity>> = locationDAO.getAllLocations().asLiveData()
 
-    fun saveLocation(location: LocationEntity){
+    var newLocation: String = ""
+
+    fun saveLocation(location: String){
+        val location = LocationEntity(location = location)
+
         viewModelScope.launch {
             locationDAO.insertNewLocation(location)
         }

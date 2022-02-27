@@ -1,6 +1,7 @@
 package com.teddyDev.myweather
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,11 +35,12 @@ class AddLocationFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             addLocationFrg = this@AddLocationFragment
+            viewM = viewModel
         }
     }
 
     fun addLocation(location: String){
-        val location= LocationEntity(location = location)
+        Log.i("AddLocationFragment","addLocation called")
         viewModel.saveLocation(location)
     }
 }
