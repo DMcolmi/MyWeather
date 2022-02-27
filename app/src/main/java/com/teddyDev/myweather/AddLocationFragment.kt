@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -40,7 +41,7 @@ class AddLocationFragment: Fragment() {
     }
 
     fun addLocation(location: String){
-        Log.i("AddLocationFragment","addLocation called")
         viewModel.saveLocation(location)
+        findNavController().navigate(R.id.action_addLocationFragment_to_meteoListFragment)
     }
 }

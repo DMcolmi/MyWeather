@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface LocationDAO {
 
     @Insert
-    fun insertNewLocation(location: LocationEntity)
+    suspend fun insertNewLocation(location: LocationEntity)
 
     @Query("select * from t_location order by id ASC")
     fun getAllLocations(): Flow<List<LocationEntity>>

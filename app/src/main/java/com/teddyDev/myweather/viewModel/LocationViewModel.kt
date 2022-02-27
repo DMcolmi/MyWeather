@@ -17,10 +17,10 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     fun saveLocation(location: String){
         val location = LocationEntity(location = location)
-
         viewModelScope.launch {
             locationDAO.insertNewLocation(location)
         }
+        newLocation = ""
     }
 }
 
