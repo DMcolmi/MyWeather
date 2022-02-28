@@ -11,11 +11,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weather_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/standard_padding"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/weather_item"
-            tools:itemCount="25"/>
+            tools:itemCount="4"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_new_location_button"
