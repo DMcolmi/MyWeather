@@ -45,7 +45,6 @@ class LocationListAdapter: ListAdapter<LocationEntity, LocationListAdapter.Locat
             ): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 }
