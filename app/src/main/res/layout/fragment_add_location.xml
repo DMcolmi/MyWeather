@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="add_location_frg"
             type="com.teddyDev.myweather.AddLocationFragment" />
+
         <variable
             name="viewM"
             type="com.teddyDev.myweather.viewModel.LocationViewModel" />
@@ -14,18 +18,20 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/add_location_card"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/standard_padding">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/search_location_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="@dimen/standard_padding">
 
 
                 <LinearLayout
@@ -48,19 +54,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/add_location_subtitle"></TextView>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/standard_padding">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_text_field_search_location"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/standard_padding"
                         app:endIconMode="clear_text"
                         app:startIconContentDescription="@string/add_location"
                         app:startIconDrawable="@drawable/ic_baseline_search_24">
@@ -69,55 +69,46 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
-                            android:text="@={viewM.newLocation}"/>
+                            android:text="@={viewM.newLocation}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
-                        android:id="@+id/add_new_location_button"
+                        android:id="@+id/search_location_button"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/add_location"
-                        app:icon="@drawable/ic_baseline_add_24"
-                        android:onClick="@{() -> add_location_frg.addLocation(viewM.newLocation)}"/>
+                        android:layout_gravity="end"
+                        android:onClick="@{() -> viewM.searchLocation(viewM.newLocation)}"
+                        android:padding="@dimen/standard_padding"
+                        android:text="@string/search_location"
+                        app:icon="@drawable/ic_baseline_search_24" />
 
                 </LinearLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/weather_card"
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/add_location_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_padding"
+                android:padding="@dimen/standard_padding"
+                android:visibility="@{viewM.apiCalFinishedWithResult ? View.VISIBLE : View.GONE}">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/add_location_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/standard_padding"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:padding="@dimen/standard_padding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/weather_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            tools:text="Milano" />
-
-                        <TextView
-                            android:id="@+id/weather"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            tools:text="26°C - Soleggiato" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
 
     </FrameLayout>
 </layout>

@@ -1,33 +1,40 @@
-package com.teddyDev.myweather
+package com.teddyDev.myweather.listAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.contentValuesOf
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.databinding.*
-import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 
-class LocationListAdapter: ListAdapter<LocationEntity, LocationListAdapter.LocationViewHolder>(DiffCallback){
+class LocationListAdapter(private val deleteLambdaThroughFragment: (LocationEntity) -> Unit): ListAdapter<LocationEntity, LocationListAdapter.LocationViewHolder>(
+    DiffCallback
+){
 
     class LocationViewHolder(private var binding: WeatherItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(location: LocationEntity){
             binding.apply {
-                weatherText.text = location.location
+                locationName.text = location.name
+                locationCountry.text = location.country
+                locationCoordinates.text = location.lat + " - " + location.lon
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         val binding: WeatherItemBinding = WeatherItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return LocationViewHolder(binding)
+        val viewHolder = LocationViewHolder(binding)
+        binding.deleteButton.setOnClickListener {
+            deleteLambdaThroughFragment(getItem(viewHolder.bindingAdapterPosition))
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val location = getItem(position)
+
+        holder.bind(location)
     }
 
     companion object{
@@ -36,7 +43,7 @@ class LocationListAdapter: ListAdapter<LocationEntity, LocationListAdapter.Locat
                 oldItem: LocationEntity,
                 newItem: LocationEntity
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.name == newItem.name && oldItem.country == newItem.country
             }
 
             override fun areContentsTheSame(
@@ -47,4 +54,5 @@ class LocationListAdapter: ListAdapter<LocationEntity, LocationListAdapter.Locat
             }
         }
     }
+
 }

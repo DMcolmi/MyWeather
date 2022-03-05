@@ -9,7 +9,7 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.openweathermap.org"
-private const val LIMIT = "1"
+private const val LIMIT = "5"
 private const val APPID = ""
 
 private val moshi = Moshi.Builder()
@@ -31,7 +31,7 @@ interface OpenWeatherApiService {
     ): List<LocationData>
 
     object OpenWeatherApi {
-        val openWeatherApiService by lazy {
+        val openWeatherApiService: OpenWeatherApiService by lazy {
             retrofit.create(OpenWeatherApiService::class.java)
         }
     }

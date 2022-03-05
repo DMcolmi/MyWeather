@@ -20,14 +20,21 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     var newLocation: String = ""
 
-    lateinit var retrievedLocationFromApi: LocationData
+    var isApiCalFinishedWithResult: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun saveLocation(location: String){
-        val locationEntity = LocationEntity(location = location)
+    var retrievedLocationFromApi: MutableLiveData<List<LocationData>> = MutableLiveData()
+
+    fun saveLocation(location: LocationData){
+        val locationEntity = LocationEntity(
+            name = location.name ?:"",
+            country = location.country ?:"",
+            lat = location.lat ?:"",
+            lon = location.lon ?:""
+        )
+
         viewModelScope.launch {
             locationDAO.insertNewLocation(locationEntity)
         }
-        searchLocation(location = location)
         newLocation = ""
     }
 
@@ -36,9 +43,17 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
             OpenWeatherApiService.OpenWeatherApi.openWeatherApiService.getLocation(
                 location
             ).let { locationsFromApi ->
-                retrievedLocationFromApi = locationsFromApi[0]
+                if(locationsFromApi.isNotEmpty()){
+                    retrievedLocationFromApi.value = locationsFromApi
+                    isApiCalFinishedWithResult.value = true
+                }
             }
-            Log.i("LocationViewModel",retrievedLocationFromApi.name)
+        }
+    }
+
+    fun deleteLocation(locationEntity: LocationEntity){
+        viewModelScope.launch {
+            locationDAO.deleteLocation(locationEntity)
         }
     }
 }

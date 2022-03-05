@@ -5,12 +5,18 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "t_location")
+@Entity(tableName = "t_location", primaryKeys = ["name","country"])
 data class LocationEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @ColumnInfo(name = "name")
+    val name: String,
 
-    @ColumnInfo(name = "location")
-    val location: String
+    @ColumnInfo(name = "country")
+    val country: String,
+
+    @ColumnInfo(name = "lat")
+    val lat: String,
+
+    @ColumnInfo(name = "lon")
+    val lon: String
 )
 
