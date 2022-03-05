@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MyWeatherT"
         android:name="com.teddyDev.myweather.WeatherApplication">
         <activity
-            android:name="com.teddyDev.myweather.MainActivity"
+            android:name="com.teddyDev.myweather.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,12 +10,15 @@ import com.teddyDev.myweather.databinding.SearchLocationItemBinding
 
 class SearchLocationListAdapter(private val addLocationLambda: (LocationData)->Unit): ListAdapter<LocationData,SearchLocationListAdapter.SearchLocationViewHolder>(DiffCallback) {
 
-    class SearchLocationViewHolder(private val lambda: (LocationData)->Unit, private val binding: SearchLocationItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(locationData: LocationData){
-            binding.country.text = locationData.country
-            binding.locationName.text = locationData.name
-            binding.addNewLocationButton.setOnClickListener {
-                lambda(locationData)
+    class SearchLocationViewHolder(private val binding: SearchLocationItemBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(lambdaToAddLocation: (LocationData)->Unit, locationData: LocationData){
+            binding.apply {
+                countryState.text = locationData.country + " - " + locationData.state
+                locationName.text = locationData.name
+                locationCoordinates.text = locationData.lat + " - " + locationData.lon
+                addNewLocationButton.setOnClickListener {
+                    lambdaToAddLocation(locationData)
+                }
             }
         }
     }
@@ -23,11 +26,11 @@ class SearchLocationListAdapter(private val addLocationLambda: (LocationData)->U
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchLocationViewHolder {
         val binding: SearchLocationItemBinding = SearchLocationItemBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return SearchLocationViewHolder(addLocationLambda, binding)
+        return SearchLocationViewHolder( binding)
     }
 
     override fun onBindViewHolder(holder: SearchLocationViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(addLocationLambda,getItem(position))
     }
 
     companion object{

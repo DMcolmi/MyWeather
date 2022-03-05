@@ -1,15 +1,20 @@
-package com.teddyDev.myweather
+package com.teddyDev.myweather.view
 
+import android.content.Context
+import android.hardware.input.InputManager
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.teddyDev.myweather.R
+import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.api.LocationData
-import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -31,7 +36,7 @@ class AddLocationFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddLocationBinding.inflate(inflater,container,false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -44,14 +49,36 @@ class AddLocationFragment: Fragment() {
             adapter.submitList(it)
         }
         binding.apply {
+
             addLocationFrg = this@AddLocationFragment
             viewM = viewModel
             addLocationRecyclerView.adapter = adapter
+            searchNewLocationInputText.setOnKeyListener { view, keyCode, _ ->
+                handleKeyEvent(view,keyCode)
+            }
         }
     }
 
-    fun addLocation(location: LocationData){
+    fun searchNewLocation(newLocation: String){
+        viewModel.searchLocation(newLocation)
+        hideSoftKey(view)
+    }
+
+    private fun addLocation(location: LocationData){
         viewModel.saveLocation(location)
         findNavController().navigate(R.id.action_addLocationFragment_to_meteoListFragment)
+    }
+
+    private fun handleKeyEvent(view: View, keyCode: Int): Boolean{
+        if(keyCode == KeyEvent.KEYCODE_ENTER){
+            hideSoftKey(view)
+            return true
+        }
+        return false
+    }
+
+    private fun hideSoftKey(view :View?){
+        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken,0)
     }
 }

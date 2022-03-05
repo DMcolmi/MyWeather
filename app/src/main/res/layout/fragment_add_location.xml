@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="add_location_frg"
-            type="com.teddyDev.myweather.AddLocationFragment" />
+            name="addLocationFrg"
+            type="com.teddyDev.myweather.view.AddLocationFragment" />
 
         <variable
             name="viewM"
@@ -56,7 +56,6 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_text_field_search_location"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -66,6 +65,7 @@
                         app:startIconDrawable="@drawable/ic_baseline_search_24">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/search_new_location_input_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
@@ -79,7 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:onClick="@{() -> viewM.searchLocation(viewM.newLocation)}"
+                        android:onClick="@{() -> addLocationFrg.searchNewLocation(viewM.newLocation)}"
                         android:padding="@dimen/standard_padding"
                         android:text="@string/search_location"
                         app:icon="@drawable/ic_baseline_search_24" />

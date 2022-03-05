@@ -31,11 +31,18 @@
                     tools:text="Milano" />
 
                 <TextView
-                    android:id="@+id/country"
+                    android:id="@+id/country_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceBody2"
                     tools:text="IT" />
+
+                <TextView
+                    android:id="@+id/location_coordinates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    tools:text="coordinates" />
 
             </LinearLayout>
 

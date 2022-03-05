@@ -8,33 +8,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.databinding.*
 
-class LocationListAdapter(private val deleteLambdaThroughFragment: (LocationEntity) -> Unit): ListAdapter<LocationEntity, LocationListAdapter.LocationViewHolder>(
+class LocationListAdapter(private val deleteLocationLambda: (LocationEntity) -> Unit): ListAdapter<LocationEntity, LocationListAdapter.LocationViewHolder>(
     DiffCallback
 ){
 
     class LocationViewHolder(private var binding: WeatherItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(location: LocationEntity){
+        fun bind(onClickDeleteLocationLambda: (LocationEntity) -> Unit, location: LocationEntity){
             binding.apply {
                 locationName.text = location.name
                 locationCountry.text = location.country
                 locationCoordinates.text = location.lat + " - " + location.lon
+                deleteButton.setOnClickListener {
+                    onClickDeleteLocationLambda(location)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         val binding: WeatherItemBinding = WeatherItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val viewHolder = LocationViewHolder(binding)
-        binding.deleteButton.setOnClickListener {
-            deleteLambdaThroughFragment(getItem(viewHolder.bindingAdapterPosition))
-        }
-        return viewHolder
+        return LocationViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
         val location = getItem(position)
-
-        holder.bind(location)
+        holder.bind(deleteLocationLambda,location)
     }
 
     companion object{

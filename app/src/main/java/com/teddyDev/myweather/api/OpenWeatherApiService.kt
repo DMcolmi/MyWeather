@@ -2,6 +2,7 @@ package com.teddyDev.myweather.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.teddyDev.myweather.api.openWeatherCurrentWeatherData.CurrentWeatherData
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -29,6 +30,16 @@ interface OpenWeatherApiService {
         @Query("limit") limit: String = LIMIT,
         @Query("appid") api_key: String = APPID
     ): List<LocationData>
+
+    @GET("data/2.5/weather")
+    suspend fun getCurrentWeatherData(
+        @Query("lat") lat: String,
+        @Query("lon") lon: String,
+        @Query("lang") lang:String,
+        @Query("units") units:String,
+        @Query("appid") api_key: String = APPID
+
+    ): CurrentWeatherData
 
     object OpenWeatherApi {
         val openWeatherApiService: OpenWeatherApiService by lazy {

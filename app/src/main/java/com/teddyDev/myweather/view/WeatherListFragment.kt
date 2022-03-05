@@ -1,15 +1,15 @@
-package com.teddyDev.myweather
+package com.teddyDev.myweather.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import com.teddyDev.myweather.R
+import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.LocationListAdapter
@@ -34,12 +34,10 @@ class WeatherListFragment : Fragment() {
         binding.setLifecycleOwner(this)
         binding.apply {
             addNewLocationButton.setOnClickListener {
-                Toast.makeText(activity, "Button pressed", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_meteoListFragment_to_addLocationFragment)
                 viewModel.newLocation = ""
                 viewModel.retrievedLocationFromApi = MutableLiveData<List<LocationData>>()
                 viewModel.isApiCalFinishedWithResult.value = false
-
             }
 
             val adapter = LocationListAdapter {
@@ -49,9 +47,7 @@ class WeatherListFragment : Fragment() {
             viewModel.locationList.observe(viewLifecycleOwner){ locations ->
                 locations.let { adapter.submitList(it) }
             }
-
             weatherRecycler.adapter = adapter
-
         }
 
         return binding.root

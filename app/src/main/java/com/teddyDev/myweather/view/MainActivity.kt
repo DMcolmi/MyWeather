@@ -1,10 +1,11 @@
-package com.teddyDev.myweather
+package com.teddyDev.myweather.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.teddyDev.myweather.R
 
 
 class MainActivity : AppCompatActivity() {
