@@ -35,8 +35,8 @@ interface OpenWeatherApiService {
     suspend fun getCurrentWeatherData(
         @Query("lat") lat: String,
         @Query("lon") lon: String,
-        @Query("lang") lang:String,
-        @Query("units") units:String,
+        @Query("lang") lang:String = "",
+        @Query("units") units:String = "",
         @Query("appid") api_key: String = APPID
 
     ): CurrentWeatherData

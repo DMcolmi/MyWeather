@@ -1,7 +1,7 @@
 package com.teddyDev.myweather.api.openWeatherCurrentWeatherData
 
 data class CurrentWeatherData (
-    var coord      : Coord?             = Coord(),
+    var coord      : Coord             = Coord(),
     var weather    : ArrayList<Weather> = arrayListOf(),
     var base       : String?            = null,
     var main       : Main?              = Main(),
@@ -9,10 +9,10 @@ data class CurrentWeatherData (
     var wind       : Wind?              = Wind(),
     var clouds     : Clouds?            = Clouds(),
     var dt         : Int?               = null,
-    var sys        : Sys?               = Sys(),
+    var sys        : Sys                = Sys(),
     var timezone   : Int?               = null,
     var id         : Int?               = null,
-    var name       : String?            = null,
+    var name       : String,
     var cod        : Int?               = null
 )
 
@@ -27,7 +27,7 @@ data class Sys (
     var type    : Int?    = null,
     var id      : Int?    = null,
     var message : Double? = null,
-    var country : String? = null,
+    var country : String =  "",
     var sunrise : Int?    = null,
     var sunset  : Int?    = null
 )
@@ -51,6 +51,6 @@ data class Main (
 )
 
 data class Coord (
-    var lon : Double? = null,
-    var lat : Double? = null
+    var lon : Double = 0.0,
+    var lat : Double = 0.0
 )

@@ -20,9 +20,15 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     var newLocation: String = ""
 
-    var isApiCalFinishedWithResult: MutableLiveData<Boolean> = MutableLiveData()
+    private var _isApiCalFinishedWithResult: MutableLiveData<Boolean> = MutableLiveData()
 
-    var retrievedLocationFromApi: MutableLiveData<List<LocationData>> = MutableLiveData()
+    val isApiCalFinishedWithResult :LiveData<Boolean>
+        get() = _isApiCalFinishedWithResult
+
+    private var _retrievedLocationFromApi: MutableLiveData<List<LocationData>> = MutableLiveData()
+
+    val retrievedLocationFromApi: LiveData<List<LocationData>>
+        get() = _retrievedLocationFromApi
 
     fun saveLocation(location: LocationData){
         val locationEntity = LocationEntity(
@@ -44,8 +50,8 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
                 location
             ).let { locationsFromApi ->
                 if(locationsFromApi.isNotEmpty()){
-                    retrievedLocationFromApi.value = locationsFromApi
-                    isApiCalFinishedWithResult.value = true
+                    _retrievedLocationFromApi.value = locationsFromApi
+                    _isApiCalFinishedWithResult.value = true
                 }
             }
         }
@@ -55,6 +61,12 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
         viewModelScope.launch {
             locationDAO.deleteLocation(locationEntity)
         }
+    }
+
+    fun clearFieldsToSearchNewLocation(){
+        newLocation = ""
+        _retrievedLocationFromApi = MutableLiveData<List<LocationData>>()
+        _isApiCalFinishedWithResult.value = false
     }
 }
 

@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.LocationListAdapter
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -35,14 +33,12 @@ class WeatherListFragment : Fragment() {
         binding.apply {
             addNewLocationButton.setOnClickListener {
                 findNavController().navigate(R.id.action_meteoListFragment_to_addLocationFragment)
-                viewModel.newLocation = ""
-                viewModel.retrievedLocationFromApi = MutableLiveData<List<LocationData>>()
-                viewModel.isApiCalFinishedWithResult.value = false
+                viewModel.clearFieldsToSearchNewLocation()
             }
 
-            val adapter = LocationListAdapter {
+            val adapter = LocationListAdapter ({
                 viewModel.deleteLocation(it)
-            }
+            }, {})
 
             viewModel.locationList.observe(viewLifecycleOwner){ locations ->
                 locations.let { adapter.submitList(it) }
