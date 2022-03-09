@@ -24,9 +24,6 @@ class LocationListAdapter(private val deleteLocationLambda: (LocationEntity) -> 
                 refreshWeatherButton.setOnClickListener {
                     updateLocationWeather(location)
                 }
-
-
-
             }
         }
     }

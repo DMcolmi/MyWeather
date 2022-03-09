@@ -11,6 +11,8 @@ import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.LocationListAdapter
+import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
+import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
 import com.teddyDev.myweather.viewModel.LocationViewModelFactory
 
@@ -23,13 +25,19 @@ class WeatherListFragment : Fragment() {
         )
     }
 
+    private val currentWeatherViewModel: CurrentWeatherViewModel by activityViewModels{
+        CurrentWeatherViewModelFactory(
+            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao()
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =  WeatherMeteoListBinding.inflate(layoutInflater, container,false)
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.apply {
             addNewLocationButton.setOnClickListener {
                 findNavController().navigate(R.id.action_meteoListFragment_to_addLocationFragment)
@@ -38,7 +46,7 @@ class WeatherListFragment : Fragment() {
 
             val adapter = LocationListAdapter ({
                 viewModel.deleteLocation(it)
-            }, {})
+            }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(it)})
 
             viewModel.locationList.observe(viewLifecycleOwner){ locations ->
                 locations.let { adapter.submitList(it) }

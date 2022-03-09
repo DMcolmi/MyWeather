@@ -1,11 +1,9 @@
 package com.teddyDev.myweather.service
 
-import com.teddyDev.myweather.api.openWeatherCurrentWeatherData.CurrentWeatherData
+import com.teddyDev.myweather.api.CurrentWeatherData
 import com.teddyDev.myweather.database.CurrentWeatherEntity
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-
-class DataToEntityConverter {
+import java.text.SimpleDateFormat
+import java.util.*
 
     fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData): CurrentWeatherEntity {
         return CurrentWeatherEntity(
@@ -26,7 +24,12 @@ class DataToEntityConverter {
             description = currentWeatherData.weather[0]?.description,
             icon = currentWeatherData.weather[0]?.icon,
             visibility = currentWeatherData.visibility,
-            timestamp = ""//LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+            timestamp = getStringTimestamp()
         )
     }
-}
+
+    private fun getStringTimestamp(): String {
+        val formatter = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
+        return formatter.format(Date())
+    }
+

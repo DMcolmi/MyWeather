@@ -1,15 +1,15 @@
-package com.teddyDev.myweather.api.openWeatherCurrentWeatherData
+package com.teddyDev.myweather.api
 
 data class CurrentWeatherData (
-    var coord      : Coord             = Coord(),
-    var weather    : ArrayList<Weather> = arrayListOf(),
+    var coord      : Coord = Coord(),
+    var weather    : List<Weather> = arrayListOf(),
     var base       : String?            = null,
     var main       : Main?              = Main(),
     var visibility : Int?               = null,
     var wind       : Wind?              = Wind(),
     var clouds     : Clouds?            = Clouds(),
     var dt         : Int?               = null,
-    var sys        : Sys                = Sys(),
+    var sys        : Sys = Sys(),
     var timezone   : Int?               = null,
     var id         : Int?               = null,
     var name       : String,

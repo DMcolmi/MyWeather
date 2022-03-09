@@ -2,16 +2,15 @@ package com.teddyDev.myweather.api
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.teddyDev.myweather.api.openWeatherCurrentWeatherData.CurrentWeatherData
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.openweathermap.org"
 private const val LIMIT = "5"
 private const val APPID = ""
+private const val METRIC_UNITS = "metric"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -36,7 +35,7 @@ interface OpenWeatherApiService {
         @Query("lat") lat: String,
         @Query("lon") lon: String,
         @Query("lang") lang:String = "",
-        @Query("units") units:String = "",
+        @Query("units") units:String = METRIC_UNITS,
         @Query("appid") api_key: String = APPID
 
     ): CurrentWeatherData
@@ -46,5 +45,4 @@ interface OpenWeatherApiService {
             retrofit.create(OpenWeatherApiService::class.java)
         }
     }
-
 }
