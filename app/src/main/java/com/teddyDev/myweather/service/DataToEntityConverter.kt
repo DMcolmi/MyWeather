@@ -1,16 +1,21 @@
 package com.teddyDev.myweather.service
 
+import android.R
 import com.teddyDev.myweather.api.CurrentWeatherData
+import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.database.CurrentWeatherEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
-    fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData): CurrentWeatherEntity {
+    fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previousWeatherEntity: CurrentWeatherEntity): CurrentWeatherEntity {
         return CurrentWeatherEntity(
-            name = currentWeatherData.name,
-            country = currentWeatherData.sys.country,
-            lat = currentWeatherData.coord.lat,
-            lon = currentWeatherData.coord.lon,
+            name = previousWeatherEntity.name,
+            country = previousWeatherEntity.country,
+            state = previousWeatherEntity.state,
+            weatherName = currentWeatherData.name,
+            weatherCountry = currentWeatherData.sys.country,
+            lon = currentWeatherData.coord.lon.toString(),
+            lat = currentWeatherData.coord.lat.toString(),
             windSpeed = currentWeatherData.wind?.speed,
             windDeg = currentWeatherData.wind?.deg,
             temp = currentWeatherData.main?.temp,
@@ -28,8 +33,21 @@ import java.util.*
         )
     }
 
+    fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : CurrentWeatherEntity{
+        return  CurrentWeatherEntity(
+            name = locationData.name,
+            country = locationData.country,
+            lon = locationData.lon,
+            lat = locationData.lat,
+            state = locationData.state,
+            timestamp = getStringTimestamp()
+        )
+    }
+
+
+
     private fun getStringTimestamp(): String {
-        val formatter = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
+        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
         return formatter.format(Date())
     }
 

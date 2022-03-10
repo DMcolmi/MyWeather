@@ -9,7 +9,7 @@ interface CurrentWeatherDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateCurrentWeather(currentWeatherEntity: CurrentWeatherEntity)
 
-    @Query("select * from t_current_weather")
+    @Query("select * from t_current_weather order by name asc")
     fun getAllCurrentWeather(): Flow<List<CurrentWeatherEntity>>
 
     @Delete

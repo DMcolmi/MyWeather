@@ -15,6 +15,7 @@ import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
+import com.teddyDev.myweather.service.fromLocationDataToCurrentWeatherEntity
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -72,7 +73,7 @@ class AddLocationFragment: Fragment() {
 
     private fun addLocationWeatherDataAndNavigateBack(location: LocationData){
         viewModel.saveLocation(location)
-        currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(location)
+        currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(fromLocationDataToCurrentWeatherEntity(location))
         navigateToWeatherListFragment()
     }
 

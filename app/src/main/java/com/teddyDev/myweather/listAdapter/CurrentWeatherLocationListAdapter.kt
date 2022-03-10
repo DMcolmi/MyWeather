@@ -17,9 +17,8 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
     class LocationViewHolder(private var binding: WeatherItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(onClickDeleteLocationLambda: (CurrentWeatherEntity) -> Unit, updateLocationWeather: (CurrentWeatherEntity) -> Unit, weatherLocation: CurrentWeatherEntity){
             binding.apply {
-                locationName.text = weatherLocation.name
-                locationCountry.text = weatherLocation.country
-                locationCoordinates.text = weatherLocation.lat.toString() + " - " + weatherLocation.lon.toString()
+                locationName.text = weatherLocation.name + " - " + weatherLocation.country + " - " + weatherLocation.state
+                locationCoordinates.text = "("+weatherLocation.lat.toString() + " - " + weatherLocation.lon.toString()+")"
 
                 deleteButton.setOnClickListener {
                     onClickDeleteLocationLambda(weatherLocation)

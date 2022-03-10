@@ -31,24 +31,15 @@
                         android:id="@+id/location_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/standard_padding"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        tools:text="Milano" />
-
-                    <TextView
-                        android:id="@+id/location_country"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="state" />
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        tools:text="Milano - it" />
 
                     <TextView
                         android:id="@+id/location_coordinates"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
-                        android:layout_marginBottom="@dimen/standard_padding"
                         android:textAppearance="?attr/textAppearanceBody2"
                         tools:text="coordinates" />
 

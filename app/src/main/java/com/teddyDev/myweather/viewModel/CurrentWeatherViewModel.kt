@@ -19,19 +19,19 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) 
 
     private var currentWeatherDataToUpdate: MutableLiveData<CurrentWeatherData> = MutableLiveData()
 
-    fun updateCurrentWeatherDataForThisLocation(location: LocationData) {
+    fun updateCurrentWeatherDataForThisLocation(currentWeatherEntity: CurrentWeatherEntity) {
         viewModelScope.launch {
             currentWeatherDataToUpdate.value =
                 OpenWeatherApiService.OpenWeatherApi.openWeatherApiService.getCurrentWeatherData(
-                    location.lat ?: "",
-                    location.lon ?:""
+                    currentWeatherEntity.lat.toString() ?: "",
+                    currentWeatherEntity.lon.toString() ?:""
                 )
             Log.i(
                 "CurrentWeatherViewModel",
                 currentWeatherDataToUpdate.value?.main?.temp.toString()
             )
             currentWeatherDataToUpdate.value?.let {
-                val currentWeatherEntity = fromCurrentWeatherDataToEntity(it)
+                val currentWeatherEntity = fromCurrentWeatherDataToEntity(it,currentWeatherEntity)
                 currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherEntity)
             }
         }

@@ -47,7 +47,7 @@ class WeatherListFragment : Fragment() {
 
             val adapter = CurrentWeatherLocationListAdapter ({
                 currentWeatherViewModel.deleteCurrentWeatherData(it)
-            }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(LocationData(lat =it.lat.toString(), lon = it.lon.toString()))})
+            }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(it)})
 
             currentWeatherViewModel.weatherData.observe(viewLifecycleOwner){ weatherData ->
                 weatherData?.let { adapter.submitList(weatherData) }

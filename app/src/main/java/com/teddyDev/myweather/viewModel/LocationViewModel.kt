@@ -35,7 +35,8 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
             name = location.name ?:"",
             country = location.country ?:"",
             lat = location.lat ?:"",
-            lon = location.lon ?:""
+            lon = location.lon ?:"",
+            state = location.state
         )
 
         viewModelScope.launch {
