@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.api.CurrentWeatherData
+import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.database.CurrentWeatherDAO
+import com.teddyDev.myweather.database.CurrentWeatherEntity
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
 import kotlinx.coroutines.launch
@@ -13,16 +15,16 @@ import java.lang.IllegalArgumentException
 
 class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) : ViewModel() {
 
-    private var _currentWeatherDataToUpdate: MutableLiveData<CurrentWeatherData> = MutableLiveData()
-    val currentWeatherDataToUpdate: LiveData<CurrentWeatherData>
-        get() = _currentWeatherDataToUpdate
+    val weatherData: LiveData<List<CurrentWeatherEntity>> = currentWeatherDAO.getAllCurrentWeather().asLiveData()
 
-    fun updateCurrentWeatherDataForThisLocation(location: LocationEntity) {
+    private var currentWeatherDataToUpdate: MutableLiveData<CurrentWeatherData> = MutableLiveData()
+
+    fun updateCurrentWeatherDataForThisLocation(location: LocationData) {
         viewModelScope.launch {
-            _currentWeatherDataToUpdate.value =
+            currentWeatherDataToUpdate.value =
                 OpenWeatherApiService.OpenWeatherApi.openWeatherApiService.getCurrentWeatherData(
-                    location.lat,
-                    location.lon
+                    location.lat ?: "",
+                    location.lon ?:""
                 )
             Log.i(
                 "CurrentWeatherViewModel",
@@ -32,6 +34,12 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) 
                 val currentWeatherEntity = fromCurrentWeatherDataToEntity(it)
                 currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherEntity)
             }
+        }
+    }
+
+    fun deleteCurrentWeatherData(currentWeatherEntity: CurrentWeatherEntity){
+        viewModelScope.launch {
+            currentWeatherDAO.deleteCurrentWeather(currentWeatherEntity)
         }
     }
 

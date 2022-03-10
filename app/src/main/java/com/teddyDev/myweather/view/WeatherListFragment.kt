@@ -9,8 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
+import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
-import com.teddyDev.myweather.listAdapter.LocationListAdapter
+import com.teddyDev.myweather.listAdapter.CurrentWeatherLocationListAdapter
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -44,12 +45,12 @@ class WeatherListFragment : Fragment() {
                 viewModel.clearFieldsToSearchNewLocation()
             }
 
-            val adapter = LocationListAdapter ({
-                viewModel.deleteLocation(it)
-            }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(it)})
+            val adapter = CurrentWeatherLocationListAdapter ({
+                currentWeatherViewModel.deleteCurrentWeatherData(it)
+            }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(LocationData(lat =it.lat.toString(), lon = it.lon.toString()))})
 
-            viewModel.locationList.observe(viewLifecycleOwner){ locations ->
-                locations.let { adapter.submitList(it) }
+            currentWeatherViewModel.weatherData.observe(viewLifecycleOwner){ weatherData ->
+                weatherData?.let { adapter.submitList(weatherData) }
             }
             weatherRecycler.adapter = adapter
         }

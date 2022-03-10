@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">MyWeather</string>
-    <string name="my_meteo">My Weather</string>
+    <string name="my_weather">My Weather</string>
     <string name="add_location">Add location</string>
     <string name="remove_location">Remove</string>
     <string name="search_location">Search location</string>
     <string name="add_location_subtitle">Search for a new location to add in the weather feed:</string>
+    <string name="weather_temperature">%1$.1f °C</string>
+    <string name="weather_temp_min_max">min %1$s °C - max %2$s °C</string>
+    <string name="weather_wind_speed">wind speed: %1$.1f m/s</string>
+    <string name="weather_pressure">pressure: %1$d hPa</string>
+    <string name="weather_humidity">humidity: %1$d %%</string>
+    <string name="weather_last_updated">last update: %1$s</string>
 </resources>

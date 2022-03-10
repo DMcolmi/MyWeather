@@ -1,14 +1,12 @@
 package com.teddyDev.myweather.view
 
 import android.content.Context
-import android.hardware.input.InputManager
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +15,8 @@ import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
+import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
+import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
 import com.teddyDev.myweather.viewModel.LocationViewModelFactory
 
@@ -25,6 +25,12 @@ class AddLocationFragment: Fragment() {
     private val viewModel: LocationViewModel by activityViewModels {
         LocationViewModelFactory(
             (activity?.application as WeatherApplication).appDatabase.getLocationDao()
+        )
+    }
+
+    private val currentWeatherViewModel: CurrentWeatherViewModel by activityViewModels {
+        CurrentWeatherViewModelFactory(
+            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao()
         )
     }
 
@@ -43,7 +49,7 @@ class AddLocationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = SearchLocationListAdapter{
-            addLocation(it)
+            addLocationWeatherDataAndNavigateBack(it)
         }
         viewModel.retrievedLocationFromApi.observe(this.viewLifecycleOwner){
             adapter.submitList(it)
@@ -64,8 +70,13 @@ class AddLocationFragment: Fragment() {
         hideSoftKey(view)
     }
 
-    private fun addLocation(location: LocationData){
+    private fun addLocationWeatherDataAndNavigateBack(location: LocationData){
         viewModel.saveLocation(location)
+        currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(location)
+        navigateToWeatherListFragment()
+    }
+
+    private fun navigateToWeatherListFragment(){
         findNavController().navigate(R.id.action_addLocationFragment_to_meteoListFragment)
     }
 
