@@ -29,7 +29,8 @@ import java.util.*
             description = currentWeatherData.weather[0]?.description,
             icon = currentWeatherData.weather[0]?.icon,
             visibility = currentWeatherData.visibility,
-            timestamp = getStringTimestamp()
+            timestamp = getStringTimestamp(),
+            widgetId = previousWeatherEntity.widgetId
         )
     }
 

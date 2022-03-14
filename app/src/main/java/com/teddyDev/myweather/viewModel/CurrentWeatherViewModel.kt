@@ -9,6 +9,7 @@ import com.teddyDev.myweather.database.CurrentWeatherDAO
 import com.teddyDev.myweather.database.CurrentWeatherEntity
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -37,12 +38,24 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) 
         }
     }
 
-    fun deleteCurrentWeatherData(currentWeatherEntity: CurrentWeatherEntity){
+    fun deleteCurrentWeatherEntity(currentWeatherEntity: CurrentWeatherEntity){
         viewModelScope.launch {
             currentWeatherDAO.deleteCurrentWeather(currentWeatherEntity)
         }
     }
 
+    fun bindCurrentWeatherEntityToWidget(widgetId:Int){
+        viewModelScope.launch {
+            val currentWeatherDataList = currentWeatherDAO.getAllCurrentWeather()
+            currentWeatherDataList.collect(){
+                val currentWeatherData = it[0]
+                currentWeatherData.widgetId = widgetId
+                currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherData)
+            }
+        }
+    }
+
+    fun getWeatherDataFromWidgetId(widgetId: Int): LiveData<CurrentWeatherEntity> = currentWeatherDAO.getCurrentWeatherEntityByWidgetId(widgetId).asLiveData()
 
 }
 

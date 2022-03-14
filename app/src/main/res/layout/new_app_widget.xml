@@ -7,164 +7,104 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.MyWeatherT.AppWidgetContainer">
 
-    <TextView
-        android:id="@+id/appwidget_text"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/weather_info"
         android:layout_centerInParent="true"
-        android:layout_marginStart="@dimen/standard_padding"
-        android:layout_marginTop="@dimen/standard_padding"
-        android:layout_marginEnd="@dimen/standard_padding"
-        android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
-
-
-    <LinearLayout
-        android:id="@+id/weather_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_padding">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="@dimen/standard_padding">
-
-                <TextView
-                    android:id="@+id/location_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    tools:text="Milano - it" />
-
-                <TextView
-                    android:id="@+id/location_coordinates"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="coordinates" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/delete_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:text="@string/remove_location"
-                app:icon="@drawable/ic_baseline_remove_24"
-                app:iconGravity="textStart">
-
-            </Button>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/standard_padding">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/widget_location_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="Milano - it" />
 
-                <TextView
-                    android:id="@+id/weather_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    tools:text="clear sky" />
-
-                <TextView
-                    android:id="@+id/weather_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    tools:text="23 °C - feels like 21 °C"
-                    android:text="@string/weather_temperature"/>
-
-                <TextView
-                    android:id="@+id/weather_max_min_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="min 17 °C - max 24 °C"
-                    android:text="@string/weather_temp_min_max"/>
-
-                <TextView
-                    android:id="@+id/weather_wind_speed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="wind speed"
-                    android:text="@string/weather_wind_speed"/>
-
-                <TextView
-                    android:id="@+id/weather_pressure"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="pressure"
-                    android:text="@string/weather_pressure"/>
-
-                <TextView
-                    android:id="@+id/weather_humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="humidity"
-                    android:text="@string/weather_humidity"/>
-
-                <TextView
-                    android:id="@+id/weather_last_updated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_padding"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    tools:text="timestamp"
-                    android:text="@string/weather_last_updated"/>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/refresh_weather_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/widget_location_coordinates"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.1"
-                app:icon="@drawable/ic_baseline_refresh_24"
-                app:iconGravity="end" />
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="coordinates" />
+
+            <TextView
+                android:id="@+id/widget_weather_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="clear sky" />
+
+            <TextView
+                android:id="@+id/widget_weather_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_temperature"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="23 °C - feels like 21 °C" />
+
+            <TextView
+                android:id="@+id/widget_weather_max_min_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_temp_min_max"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="min 17 °C - max 24 °C" />
+
+            <TextView
+                android:id="@+id/widget_weather_wind_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_wind_speed"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="wind speed" />
+
+            <TextView
+                android:id="@+id/widget_weather_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_pressure"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="pressure" />
+
+            <TextView
+                android:id="@+id/widget_weather_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_humidity"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="humidity" />
+
+            <TextView
+                android:id="@+id/widget_weather_last_updated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather_last_updated"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="timestamp" />
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/widget_refresh_weather_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.15"
+            android:textSize="@dimen/widget_standard_text_dimension"
+            app:icon="@drawable/ic_baseline_refresh_24"
+            app:iconGravity="end" />
 
     </LinearLayout>
+
+
 </RelativeLayout>
 
     <!--style="@style/Widget.MyWeather.AppWidget.InnerView"-->

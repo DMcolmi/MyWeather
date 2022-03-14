@@ -15,4 +15,7 @@ interface CurrentWeatherDAO {
     @Delete
     suspend fun deleteCurrentWeather(currentWeatherEntity: CurrentWeatherEntity)
 
+    @Query("select * from t_current_weather where widget_id = :widgetId limit 1")
+    fun getCurrentWeatherEntityByWidgetId(widgetId: Int): Flow<CurrentWeatherEntity>
+
 }

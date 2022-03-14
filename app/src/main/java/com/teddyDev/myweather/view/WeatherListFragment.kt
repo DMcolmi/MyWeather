@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.CurrentWeatherLocationListAdapter
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
@@ -46,7 +45,7 @@ class WeatherListFragment : Fragment() {
             }
 
             val adapter = CurrentWeatherLocationListAdapter ({
-                currentWeatherViewModel.deleteCurrentWeatherData(it)
+                currentWeatherViewModel.deleteCurrentWeatherEntity(it)
             }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(it)})
 
             currentWeatherViewModel.weatherData.observe(viewLifecycleOwner){ weatherData ->
