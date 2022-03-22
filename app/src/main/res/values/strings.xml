@@ -11,6 +11,7 @@
     <string name="weather_pressure">pressure: %1$d hPa</string>
     <string name="weather_humidity">humidity: %1$d %%</string>
     <string name="weather_last_updated">last update: %1$s</string>
+    <string name="weather_sunrise_sunset">sunrise: %1$s - sunset: %2$s</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>

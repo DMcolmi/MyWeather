@@ -67,5 +67,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
+    //work manager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
 }

@@ -4,20 +4,12 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
-import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.lifecycle.asLiveData
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.database.CurrentWeatherDAO
-import com.teddyDev.myweather.database.CurrentWeatherEntity
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
-import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
-import com.teddyDev.myweather.viewModel.LocationViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -53,10 +45,10 @@ class NewAppWidget : AppWidgetProvider() {
         appWidgetId: Int
     ) {
         currentWeatherDao = (context.applicationContext as WeatherApplication).appDatabase.getCurrentWeatherDao()
-        val widgetText = context.getString(R.string.appwidget_text)
+
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, R.layout.new_app_widget)
-        //views.setTextViewText(R.id.appwidget_text, widgetText)
+
         CoroutineScope(Dispatchers.Main).launch {
             val currentWeatherEntity = currentWeatherDao.getCurrentWeatherEntityByWidgetId(appWidgetId)
             currentWeatherEntity.collect(){

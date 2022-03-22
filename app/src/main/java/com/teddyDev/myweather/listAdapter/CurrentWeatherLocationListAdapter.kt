@@ -9,6 +9,7 @@ import com.teddyDev.myweather.R
 import com.teddyDev.myweather.database.CurrentWeatherEntity
 import com.teddyDev.myweather.databinding.*
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
+import com.teddyDev.myweather.service.getTimeFromMilliseconds
 
 class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (CurrentWeatherEntity) -> Unit, private val updateLocationWeather: (CurrentWeatherEntity) -> Unit): ListAdapter<CurrentWeatherEntity, CurrentWeatherLocationListAdapter.LocationViewHolder>(
     DiffCallback
@@ -28,6 +29,10 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
                 }
                 weatherDescription.text = weatherLocation.description?.uppercase()
                 weatherTemperature.text = root.context.getString(R.string.weather_temperature,weatherLocation.temp)
+                weatherSunriseSunset.text = root.context.getString(R.string.weather_sunrise_sunset
+                    ,getTimeFromMilliseconds(weatherLocation.sunrise)
+                    ,getTimeFromMilliseconds(weatherLocation.sunset)
+                )
                 weatherMaxMinTemperature.text = root.context.getString(R.string.weather_temp_min_max
                     ,getHyphenIfDoubleNull(weatherLocation.tempMin)
                     ,getHyphenIfDoubleNull(weatherLocation.tempMax)

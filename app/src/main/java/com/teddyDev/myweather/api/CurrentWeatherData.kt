@@ -28,8 +28,8 @@ data class Sys (
     var id      : Int?    = null,
     var message : Double? = null,
     var country : String =  "",
-    var sunrise : Int?    = null,
-    var sunset  : Int?    = null
+    var sunrise : Long?    = null,
+    var sunset  : Long?    = null
 )
 
 data class Clouds (

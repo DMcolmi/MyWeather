@@ -90,6 +90,15 @@
                         android:text="@string/weather_temperature"/>
 
                     <TextView
+                        android:id="@+id/weather_sunrise_sunset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_padding"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        tools:text="sunrise: 7:35 - sunset: 20:15"
+                        android:text="@string/weather_temperature"/>
+
+                    <TextView
                         android:id="@+id/weather_max_min_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

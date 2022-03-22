@@ -47,8 +47,5 @@ import java.util.*
 
 
 
-    private fun getStringTimestamp(): String {
-        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
-        return formatter.format(Date())
-    }
+
 

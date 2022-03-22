@@ -27,10 +27,7 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) 
                     currentWeatherEntity.lat.toString() ?: "",
                     currentWeatherEntity.lon.toString() ?:""
                 )
-            Log.i(
-                "CurrentWeatherViewModel",
-                currentWeatherDataToUpdate.value?.main?.temp.toString()
-            )
+
             currentWeatherDataToUpdate.value?.let {
                 val currentWeatherEntity = fromCurrentWeatherDataToEntity(it,currentWeatherEntity)
                 currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherEntity)
