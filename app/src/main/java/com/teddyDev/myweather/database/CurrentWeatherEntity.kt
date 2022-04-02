@@ -29,7 +29,7 @@ data class CurrentWeatherEntity (
     val icon :String?= null,
     val visibility :Int? = null,
     @ColumnInfo(defaultValue = "(CURRENT_TIMESTAMP)")
-    val timestamp: String,
+    var timestamp: String,
     @ColumnInfo(name = "widget_id")
     var widgetId: Int? = null
 )

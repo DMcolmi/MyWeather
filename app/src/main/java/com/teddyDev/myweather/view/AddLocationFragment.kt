@@ -31,7 +31,8 @@ class AddLocationFragment: Fragment() {
 
     private val currentWeatherViewModel: CurrentWeatherViewModel by activityViewModels {
         CurrentWeatherViewModelFactory(
-            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao()
+            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao(),
+            activity?.application as WeatherApplication
         )
     }
 

@@ -24,7 +24,8 @@ class AppWidgetConfigurationActivity : AppCompatActivity() {
 
     private val currentWeatherViewModel: CurrentWeatherViewModel by viewModels {
         CurrentWeatherViewModelFactory(
-            (this?.application as WeatherApplication).appDatabase.getCurrentWeatherDao()
+            (this?.application as WeatherApplication).appDatabase.getCurrentWeatherDao(),
+            application
         )
     }
 

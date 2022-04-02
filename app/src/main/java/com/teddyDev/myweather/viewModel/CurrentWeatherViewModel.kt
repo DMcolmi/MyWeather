@@ -1,24 +1,26 @@
 package com.teddyDev.myweather.viewModel
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.*
+import androidx.work.*
 import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.api.CurrentWeatherData
-import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.database.CurrentWeatherDAO
 import com.teddyDev.myweather.database.CurrentWeatherEntity
-import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
-import kotlinx.coroutines.flow.collect
+import com.teddyDev.myweather.work.CurrentWeatherDataWork
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import java.util.concurrent.TimeUnit
 
 
-class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) : ViewModel() {
+class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO, private val application: Application) : ViewModel() {
 
     val weatherData: LiveData<List<CurrentWeatherEntity>> = currentWeatherDAO.getAllCurrentWeather().asLiveData()
 
     private var currentWeatherDataToUpdate: MutableLiveData<CurrentWeatherData> = MutableLiveData()
+
+    private val workManager = WorkManager.getInstance(application)
 
     fun updateCurrentWeatherDataForThisLocation(currentWeatherEntity: CurrentWeatherEntity) {
         viewModelScope.launch {
@@ -54,14 +56,26 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO) 
 
     fun getWeatherDataFromWidgetId(widgetId: Int): LiveData<CurrentWeatherEntity> = currentWeatherDAO.getCurrentWeatherEntityByWidgetId(widgetId).asLiveData()
 
+    fun beginUniqueWorkToUpdateCurrentWeather(){
+        val constraint = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val workRequestUpdateWeather = PeriodicWorkRequestBuilder<CurrentWeatherDataWork>(1,TimeUnit.MINUTES)
+            //.setConstraints(constraint)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork("UPDATE_CURRENT_WEATHER", ExistingPeriodicWorkPolicy.KEEP, workRequestUpdateWeather)
+    }
+
 }
 
-class CurrentWeatherViewModelFactory(private val currentWeatherDAO: CurrentWeatherDAO) :
+class CurrentWeatherViewModelFactory(private val currentWeatherDAO: CurrentWeatherDAO, private val application: Application) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CurrentWeatherViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CurrentWeatherViewModel(currentWeatherDAO) as T
+            return CurrentWeatherViewModel(currentWeatherDAO, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

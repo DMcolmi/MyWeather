@@ -27,7 +27,8 @@ class WeatherListFragment : Fragment() {
 
     private val currentWeatherViewModel: CurrentWeatherViewModel by activityViewModels{
         CurrentWeatherViewModelFactory(
-            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao()
+            (activity?.application as WeatherApplication).appDatabase.getCurrentWeatherDao(),
+            activity?.application as WeatherApplication
         )
     }
 
@@ -60,6 +61,7 @@ class WeatherListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        currentWeatherViewModel.beginUniqueWorkToUpdateCurrentWeather()
     }
 
     companion object {
