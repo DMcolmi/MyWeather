@@ -8,12 +8,18 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
+import com.teddyDev.myweather.api.LocationData
+import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.databinding.ActivityAppWidgetConfigurationBinding
+import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
+import com.teddyDev.myweather.listAdapter.WidgetLocationListAdapter
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
+import com.teddyDev.myweather.viewModel.LocationViewModel
 import com.teddyDev.myweather.viewModel.LocationViewModelFactory
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -24,8 +30,14 @@ class AppWidgetConfigurationActivity : AppCompatActivity() {
 
     private val currentWeatherViewModel: CurrentWeatherViewModel by viewModels {
         CurrentWeatherViewModelFactory(
-            (this?.application as WeatherApplication).appDatabase.getCurrentWeatherDao(),
+            (application as WeatherApplication).appDatabase.getCurrentWeatherDao(),
             application
+        )
+    }
+
+    private val locationViewModel: LocationViewModel by viewModels {
+        LocationViewModelFactory(
+            (application as WeatherApplication).appDatabase.getLocationDao()
         )
     }
 
@@ -35,17 +47,26 @@ class AppWidgetConfigurationActivity : AppCompatActivity() {
         binding = ActivityAppWidgetConfigurationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.widgetButtonFinishConfiguration.setOnClickListener {
-            updateWidgetFromConfigurationActivity()
+        val adapter = WidgetLocationListAdapter{
+             updateWidgetFromConfigurationActivity(it)
         }
+
+        locationViewModel.locationList.observe(this){
+            adapter.submitList(it)
+        }
+
+        binding.apply {
+            addLocationRecyclerView.adapter = adapter
+        }
+
     }
 
-    private fun updateWidgetFromConfigurationActivity(){
+    private fun updateWidgetFromConfigurationActivity(locationEntity: LocationEntity){
         setResult(Activity.RESULT_CANCELED)
 
         val appWidgetId: Int = intent?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
-        bindWidgetToLocation(appWidgetId)
+        bindWidgetToLocation(appWidgetId,locationEntity)
 
         val appWidgetManager = AppWidgetManager.getInstance(this)
 
@@ -60,7 +81,7 @@ class AppWidgetConfigurationActivity : AppCompatActivity() {
     }
 
 
-    private fun bindWidgetToLocation(appWidgetId: Int){
-        currentWeatherViewModel.bindCurrentWeatherEntityToWidget(appWidgetId)
+    private fun bindWidgetToLocation(appWidgetId: Int, locationEntity: LocationEntity){
+        currentWeatherViewModel.bindCurrentWeatherEntityToWidget(appWidgetId, locationEntity)
     }
 }

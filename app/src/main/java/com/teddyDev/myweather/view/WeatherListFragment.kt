@@ -11,6 +11,7 @@ import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.CurrentWeatherLocationListAdapter
+import com.teddyDev.myweather.service.fromCurrentWeatherEntityToLocationEntity
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -47,6 +48,7 @@ class WeatherListFragment : Fragment() {
 
             val adapter = CurrentWeatherLocationListAdapter ({
                 currentWeatherViewModel.deleteCurrentWeatherEntity(it)
+                viewModel.deleteLocation(fromCurrentWeatherEntityToLocationEntity(it))
             }, {currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(it)})
 
             currentWeatherViewModel.weatherData.observe(viewLifecycleOwner){ weatherData ->

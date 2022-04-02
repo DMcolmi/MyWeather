@@ -7,6 +7,7 @@ import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.api.CurrentWeatherData
 import com.teddyDev.myweather.database.CurrentWeatherDAO
 import com.teddyDev.myweather.database.CurrentWeatherEntity
+import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
 import com.teddyDev.myweather.work.CurrentWeatherDataWork
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO, 
         }
     }
 
-    fun bindCurrentWeatherEntityToWidget(widgetId:Int){
+    fun bindCurrentWeatherEntityToWidget(widgetId:Int, locationEntity: LocationEntity){
         viewModelScope.launch {
             val currentWeatherDataList = currentWeatherDAO.getAllCurrentWeather()
             currentWeatherDataList.collect(){
@@ -61,8 +62,8 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO, 
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val workRequestUpdateWeather = PeriodicWorkRequestBuilder<CurrentWeatherDataWork>(1,TimeUnit.MINUTES)
-            //.setConstraints(constraint)
+        val workRequestUpdateWeather = PeriodicWorkRequestBuilder<CurrentWeatherDataWork>(30,TimeUnit.MINUTES)
+            .setConstraints(constraint)
             .build()
 
         workManager.enqueueUniquePeriodicWork("UPDATE_CURRENT_WEATHER", ExistingPeriodicWorkPolicy.KEEP, workRequestUpdateWeather)

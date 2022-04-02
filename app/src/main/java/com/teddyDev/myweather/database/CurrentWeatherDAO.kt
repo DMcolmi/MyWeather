@@ -18,4 +18,6 @@ interface CurrentWeatherDAO {
     @Query("select * from t_current_weather where widget_id = :widgetId limit 1")
     fun getCurrentWeatherEntityByWidgetId(widgetId: Int): Flow<CurrentWeatherEntity>
 
+    @Query("select * from t_current_weather order by name asc")
+    fun getAllCurrentWeatherForWorkManager(): List<CurrentWeatherEntity>
 }
