@@ -10,6 +10,7 @@ import com.teddyDev.myweather.database.CurrentWeatherEntity
 import com.teddyDev.myweather.database.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
 import com.teddyDev.myweather.work.CurrentWeatherDataWork
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit
@@ -46,12 +47,11 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO, 
 
     fun bindCurrentWeatherEntityToWidget(widgetId:Int, locationEntity: LocationEntity){
         viewModelScope.launch {
-            val currentWeatherDataList = currentWeatherDAO.getAllCurrentWeather()
-            currentWeatherDataList.collect(){
-                val currentWeatherData = it[0]
-                currentWeatherData.widgetId = widgetId
-                currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherData)
-            }
+                val currentWeatherData = currentWeatherDAO.getCurrentWeatherData(locationEntity.name, locationEntity.country)
+                currentWeatherData.collect(){
+                    it.widgetId = widgetId
+                    currentWeatherDAO.insertOrUpdateCurrentWeather(it)
+                }
         }
     }
 
@@ -62,13 +62,16 @@ class CurrentWeatherViewModel(private val currentWeatherDAO: CurrentWeatherDAO, 
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val workRequestUpdateWeather = PeriodicWorkRequestBuilder<CurrentWeatherDataWork>(30,TimeUnit.MINUTES)
+        val workRequestUpdateWeather = PeriodicWorkRequestBuilder<CurrentWeatherDataWork>(UPDATE_INTERVAL,TimeUnit.MINUTES)
             .setConstraints(constraint)
             .build()
 
         workManager.enqueueUniquePeriodicWork("UPDATE_CURRENT_WEATHER", ExistingPeriodicWorkPolicy.KEEP, workRequestUpdateWeather)
     }
 
+    companion object {
+        const  val UPDATE_INTERVAL: Long = 60
+    }
 }
 
 class CurrentWeatherViewModelFactory(private val currentWeatherDAO: CurrentWeatherDAO, private val application: Application) :

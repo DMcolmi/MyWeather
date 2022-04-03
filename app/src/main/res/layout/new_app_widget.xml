@@ -12,34 +12,34 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="horizontal"
-        android:padding="@dimen/standard_padding">
+        android:padding="@dimen/widget_padding">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/widget_location_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/widget_standard_text_dimension"
+                android:textSize="@dimen/widget_title_text_dimension"
                 tools:text="Milano - it" />
-
-            <TextView
-                android:id="@+id/widget_location_coordinates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/widget_standard_text_dimension"
-                tools:text="coordinates" />
 
             <TextView
                 android:id="@+id/widget_weather_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/widget_standard_text_dimension"
+                android:textSize="@dimen/widget_title_text_dimension"
                 tools:text="clear sky" />
+
+            <TextView
+                android:id="@+id/widget_sunrise_sunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/widget_standard_text_dimension"
+                tools:text="sunrise: 7:35 - sunset: 20:15"
+                android:text="@string/weather_temperature"/>
 
             <TextView
                 android:id="@+id/widget_weather_temperature"
@@ -55,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/weather_temp_min_max"
                 android:textSize="@dimen/widget_standard_text_dimension"
-                tools:text="min 17 °C - max 24 °C" />
+                tools:text="min 17 °C - max 24 °C"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/widget_weather_wind_speed"
@@ -81,26 +82,7 @@
                 android:textSize="@dimen/widget_standard_text_dimension"
                 tools:text="humidity" />
 
-            <TextView
-                android:id="@+id/widget_weather_last_updated"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_last_updated"
-                android:textSize="@dimen/widget_standard_text_dimension"
-                tools:text="timestamp" />
-
         </LinearLayout>
-
-        <Button
-            android:id="@+id/widget_refresh_weather_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.15"
-            android:textSize="@dimen/widget_standard_text_dimension"
-            app:icon="@drawable/ic_baseline_refresh_24"
-            app:iconGravity="end" />
 
     </LinearLayout>
 

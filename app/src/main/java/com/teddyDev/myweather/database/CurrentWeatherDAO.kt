@@ -20,4 +20,10 @@ interface CurrentWeatherDAO {
 
     @Query("select * from t_current_weather order by name asc")
     fun getAllCurrentWeatherForWorkManager(): List<CurrentWeatherEntity>
+
+    @Query("select * from t_current_weather where name = :name and country = :country")
+    fun getCurrentWeatherData(name: String, country: String): Flow<CurrentWeatherEntity>
+
+    @Query("update t_current_weather set widget_id = null where widget_id = :widgetId")
+    suspend fun removeWidgetIdFromEntity(widgetId: Int)
 }

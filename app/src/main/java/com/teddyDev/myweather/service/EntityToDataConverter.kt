@@ -12,3 +12,10 @@ fun fromLocationEntityToData(locationEntity: LocationEntity): LocationData{
         state = locationEntity.state
     )
 }
+
+fun fromLocationEntityToLocationDataList(locationEntityList: List<LocationEntity>){
+    val locationDataList = ArrayList<LocationData>()
+    locationEntityList.forEach {
+        locationDataList.add(fromLocationEntityToData(it))
+    }
+}

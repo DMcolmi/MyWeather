@@ -19,7 +19,6 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
         fun bind(onClickDeleteLocationLambda: (CurrentWeatherEntity) -> Unit, updateLocationWeather: (CurrentWeatherEntity) -> Unit, weatherLocation: CurrentWeatherEntity){
             binding.apply {
                 locationName.text = weatherLocation.name + " - " + weatherLocation.country + " - " + weatherLocation.state
-                locationCoordinates.text = "("+weatherLocation.lat.toString() + " - " + weatherLocation.lon.toString()+")"
 
                 deleteButton.setOnClickListener {
                     onClickDeleteLocationLambda(weatherLocation)
@@ -40,7 +39,6 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
                 weatherWindSpeed.text = root.context.getString(R.string.weather_wind_speed,weatherLocation.windSpeed)
                 weatherPressure.text = root.context.getString(R.string.weather_pressure,weatherLocation.pressure)
                 weatherHumidity.text = root.context.getString(R.string.weather_humidity,weatherLocation.humidity)
-                weatherLastUpdated.text = root.context.getString(R.string.weather_last_updated,weatherLocation.timestamp)
             }
         }
     }

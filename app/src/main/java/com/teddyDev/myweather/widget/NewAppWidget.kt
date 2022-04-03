@@ -8,6 +8,7 @@ import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
 import com.teddyDev.myweather.database.CurrentWeatherDAO
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
+import com.teddyDev.myweather.service.getTimeFromMilliseconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class NewAppWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        currentWeatherDao = (context.applicationContext as WeatherApplication).appDatabase.getCurrentWeatherDao()
         // There may be multiple widgets active, so update all of them
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -44,7 +46,7 @@ class NewAppWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int
     ) {
-        currentWeatherDao = (context.applicationContext as WeatherApplication).appDatabase.getCurrentWeatherDao()
+
 
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, R.layout.new_app_widget)
@@ -54,7 +56,6 @@ class NewAppWidget : AppWidgetProvider() {
             currentWeatherEntity.collect(){
                 it?.let {
                     views.setTextViewText(R.id.widget_location_name, it.name)
-                    views.setTextViewText(R.id.widget_location_coordinates, it.lat + " - " + it.lon)
                     views.setTextViewText(R.id.widget_weather_description, it.description?.uppercase())
                     views.setTextViewText(R.id.widget_weather_temperature, context.getString(R.string.weather_temperature,it.temp))
                     views.setTextViewText(R.id.widget_weather_max_min_temperature, context.getString(R.string.weather_temp_min_max
@@ -64,9 +65,23 @@ class NewAppWidget : AppWidgetProvider() {
                     views.setTextViewText(R.id.widget_weather_wind_speed, context.getString(R.string.weather_wind_speed,it.windSpeed))
                     views.setTextViewText(R.id.widget_weather_pressure, context.getString(R.string.weather_pressure,it.pressure))
                     views.setTextViewText(R.id.widget_weather_humidity,context.getString(R.string.weather_humidity,it.humidity))
-                    views.setTextViewText(R.id.widget_weather_last_updated, context.getString(R.string.weather_last_updated,it.timestamp))
+                    views.setTextViewText(R.id.widget_sunrise_sunset, context.getString(R.string.weather_sunrise_sunset
+                        , getTimeFromMilliseconds(it.sunrise)
+                        , getTimeFromMilliseconds(it.sunset)
+                    ))
                     appWidgetManager.updateAppWidget(appWidgetId, views)
                 }
+            }
+        }
+    }
+
+    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+        super.onDeleted(context, appWidgetIds)
+
+        currentWeatherDao = (context?.applicationContext as WeatherApplication).appDatabase.getCurrentWeatherDao()
+        CoroutineScope(Dispatchers.Main).launch {
+            appWidgetIds?.forEach {
+                currentWeatherDao.removeWidgetIdFromEntity(it)
             }
         }
     }

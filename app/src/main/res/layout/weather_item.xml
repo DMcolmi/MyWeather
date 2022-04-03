@@ -35,14 +35,6 @@
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         tools:text="Milano - it" />
 
-                    <TextView
-                        android:id="@+id/location_coordinates"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/standard_padding"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="coordinates" />
-
                 </LinearLayout>
 
                 <Button
@@ -134,15 +126,6 @@
                         tools:text="humidity"
                         android:text="@string/weather_humidity"/>
 
-                    <TextView
-                        android:id="@+id/weather_last_updated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/standard_padding"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="timestamp"
-                        android:text="@string/weather_last_updated"/>
-
                 </LinearLayout>
 
                 <Button
@@ -153,7 +136,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.1"
                     app:icon="@drawable/ic_baseline_refresh_24"
-                    app:iconGravity="end" />
+                    app:iconGravity="end"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
