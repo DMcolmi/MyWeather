@@ -46,6 +46,10 @@ class WeatherListFragment : Fragment() {
                 viewModel.clearFieldsToSearchNewLocation()
             }
 
+            composeTestButton.setOnClickListener {
+                findNavController().navigate(R.id.action_meteoListFragment_to_composeTestFragment)
+            }
+
             val adapter = CurrentWeatherLocationListAdapter ({
                 currentWeatherViewModel.deleteCurrentWeatherEntity(it)
                 viewModel.deleteLocation(fromCurrentWeatherEntityToLocationEntity(it))

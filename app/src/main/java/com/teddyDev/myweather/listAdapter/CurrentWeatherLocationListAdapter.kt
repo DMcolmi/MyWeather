@@ -2,6 +2,12 @@ package com.teddyDev.myweather.listAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +45,14 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
                 weatherWindSpeed.text = root.context.getString(R.string.weather_wind_speed,weatherLocation.windSpeed)
                 weatherPressure.text = root.context.getString(R.string.weather_pressure,weatherLocation.pressure)
                 weatherHumidity.text = root.context.getString(R.string.weather_humidity,weatherLocation.humidity)
+                
+                weatherGraph.setContent { 
+                    Text(
+                        text = "test of composable in recycler view",
+                        modifier = Modifier.padding(16.dp),
+                        color = Color.White
+                    )
+                }
             }
         }
     }

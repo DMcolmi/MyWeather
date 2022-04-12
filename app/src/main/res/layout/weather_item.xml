@@ -77,54 +77,54 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_temperature"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        tools:text="23 °C - feels like 21 °C"
-                        android:text="@string/weather_temperature"/>
+                        tools:text="23 °C - feels like 21 °C" />
 
                     <TextView
                         android:id="@+id/weather_sunrise_sunset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_temperature"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="sunrise: 7:35 - sunset: 20:15"
-                        android:text="@string/weather_temperature"/>
+                        tools:text="sunrise: 7:35 - sunset: 20:15" />
 
                     <TextView
                         android:id="@+id/weather_max_min_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_temp_min_max"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="min 17 °C - max 24 °C"
-                        android:text="@string/weather_temp_min_max"/>
+                        tools:text="min 17 °C - max 24 °C" />
 
                     <TextView
                         android:id="@+id/weather_wind_speed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_wind_speed"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="wind speed"
-                        android:text="@string/weather_wind_speed"/>
+                        tools:text="wind speed" />
 
                     <TextView
                         android:id="@+id/weather_pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_pressure"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="pressure"
-                        android:text="@string/weather_pressure"/>
+                        tools:text="pressure" />
 
                     <TextView
                         android:id="@+id/weather_humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_padding"
+                        android:text="@string/weather_humidity"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        tools:text="humidity"
-                        android:text="@string/weather_humidity"/>
+                        tools:text="humidity" />
 
                 </LinearLayout>
 
@@ -135,12 +135,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.1"
+                    android:visibility="gone"
                     app:icon="@drawable/ic_baseline_refresh_24"
-                    app:iconGravity="end"
-                    android:visibility="gone"/>
+                    app:iconGravity="end" />
 
             </LinearLayout>
 
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/weather_graph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
