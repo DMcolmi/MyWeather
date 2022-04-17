@@ -2,8 +2,10 @@ package com.teddyDev.myweather.service
 
 import com.teddyDev.myweather.api.CurrentWeatherData
 import com.teddyDev.myweather.api.ForecastWeatherData
+import com.teddyDev.myweather.api.Hourly
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
 import com.teddyDev.myweather.database.entity.LocationEntity
 
 fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previousWeatherEntity: CurrentWeatherEntity): CurrentWeatherEntity {
@@ -29,7 +31,8 @@ fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previ
         icon = currentWeatherData.weather[0]?.icon,
         visibility = currentWeatherData.visibility,
         timestamp = getStringTimestamp(),
-        widgetId = previousWeatherEntity.widgetId
+        widgetId = previousWeatherEntity.widgetId,
+        hash = previousWeatherEntity.hash
     )
 }
 
@@ -40,7 +43,8 @@ fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : Current
         lon = locationData.lon,
         lat = locationData.lat,
         state = locationData.state,
-        timestamp = getStringTimestamp()
+        timestamp = getStringTimestamp(),
+        hash = getHash(locationData.name,locationData.country)
     )
 }
 
@@ -77,7 +81,42 @@ fun fromForecastWeatherDataToCurrentWeatherEntity(forecastWeatherData: ForecastW
         icon = forecastWeatherData.current.weather[0]?.icon,
         visibility = forecastWeatherData.current.visibility,
         timestamp = getStringTimestamp(),
-        widgetId = previousWeatherEntity.widgetId
+        widgetId = previousWeatherEntity.widgetId,
+        hash = previousWeatherEntity.hash
+    )
+}
+
+fun fromForecastWeatherDataToEntity(hourlyForecastWeatherData: Hourly, currentWeatherEntity: CurrentWeatherEntity){
+    HourlyForecastWeatherEntity(
+        name = currentWeatherEntity.name,
+        country = currentWeatherEntity.country,
+        state = currentWeatherEntity.state,
+        lon = currentWeatherEntity.lon,
+        lat = currentWeatherEntity.lat,
+        hash = currentWeatherEntity.hash,
+        //fields for hourly forecast
+        dt = hourlyForecastWeatherData.dt ?: 0,
+        temp = hourlyForecastWeatherData.temp,
+        feelsLike = hourlyForecastWeatherData.feelsLike,
+        pressure = hourlyForecastWeatherData.pressure,
+        humidity = hourlyForecastWeatherData.humidity,
+        dewPoint = hourlyForecastWeatherData.dewPoint,
+        uvi = hourlyForecastWeatherData.uvi,
+        clouds = hourlyForecastWeatherData.clouds,
+        visibility = hourlyForecastWeatherData.visibility,
+        windSpeed = hourlyForecastWeatherData.windSpeed,
+        windDeg = hourlyForecastWeatherData.windDeg,
+        windQust = hourlyForecastWeatherData.windQust,
+        pop = hourlyForecastWeatherData.pop,
+
+        //weather
+        id = hourlyForecastWeatherData.weather?.get(0)?.id,
+        main = hourlyForecastWeatherData.weather?.get(0)?.main,
+        description = hourlyForecastWeatherData.weather?.get(0)?.description,
+        icon = hourlyForecastWeatherData.weather?.get(0)?.icon,
+
+        //rain
+        oneHour = hourlyForecastWeatherData.rain?.oneHour
     )
 }
 

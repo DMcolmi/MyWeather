@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import com.teddyDev.myweather.database.dao.CurrentWeatherDAO
 import com.teddyDev.myweather.database.dao.LocationDAO
 import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
 import com.teddyDev.myweather.database.entity.LocationEntity
 
-@Database(entities = [LocationEntity::class, CurrentWeatherEntity::class], version = 7, exportSchema = false)
+@Database(entities = [LocationEntity::class, CurrentWeatherEntity::class, HourlyForecastWeatherEntity::class], version = 8, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getLocationDao(): LocationDAO

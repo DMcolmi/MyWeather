@@ -3,17 +3,18 @@ package com.teddyDev.myweather.database.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 
-@Entity(tableName = "t_forecast_hourly", foreignKeys = [ForeignKey(entity = CurrentWeatherEntity::class, parentColumns = [],childColumns = [] )])
-data class ForecastHourlyWeatherEntity (
+@Entity(tableName = "t_hourly_forecast", primaryKeys = ["name","country","dt"], foreignKeys = [ForeignKey(entity = CurrentWeatherEntity::class, parentColumns = ["name","country"],childColumns = ["name","country"] )])
+data class HourlyForecastWeatherEntity (
     //fields for mapping with other tables
     val name: String,
     val country: String,
     val state: String?= null,
     val lon :String?,
     val lat :String?,
+    val hash: Int,
 
     //fields for hourly forecast
-    val dt : Int? = null,
+    val dt : Int,
     val temp : Double? = null,
     val feelsLike : Double? = null,
     val pressure : Int? = null,

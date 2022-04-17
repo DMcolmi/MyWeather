@@ -21,3 +21,7 @@ fun getTimeFromMilliseconds(milliseconds: Long?):String{
     }
     return stringBuilder.toString()
 }
+
+fun getHash(name: String, country: String): Int {
+    return StringBuilder().append(name).append(country).toString().hashCode()
+}

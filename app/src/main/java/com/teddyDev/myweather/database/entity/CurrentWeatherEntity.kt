@@ -2,7 +2,6 @@ package com.teddyDev.myweather.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import java.sql.Timestamp
 
 @Entity(tableName = "t_current_weather", primaryKeys = ["name","country"])
 data class CurrentWeatherEntity (
@@ -28,5 +27,6 @@ data class CurrentWeatherEntity (
     val visibility :Int? = null,
     @ColumnInfo(defaultValue = "(CURRENT_TIMESTAMP)")
     var timestamp: String,
-    var widgetId: Int? = null
+    var widgetId: Int? = null,
+    var hash: Int
 )
