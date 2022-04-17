@@ -16,13 +16,6 @@ data class CurrentWeatherData (
     var cod        : Int?               = null
 )
 
-data class Weather (
-    var id          : Int?    = null,
-    var main        : String? = null,
-    var description : String? = null,
-    var icon        : String? = null
-)
-
 data class Sys (
     var type    : Int?    = null,
     var id      : Int?    = null,

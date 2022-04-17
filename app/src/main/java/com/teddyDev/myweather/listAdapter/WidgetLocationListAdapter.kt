@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.teddyDev.myweather.database.LocationEntity
+import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.SearchLocationItemBinding
 
 class WidgetLocationListAdapter(private val addLocationLambda: (LocationEntity)->Unit): ListAdapter<LocationEntity,WidgetLocationListAdapter.SearchLocationViewHolder>(DiffCallback) {

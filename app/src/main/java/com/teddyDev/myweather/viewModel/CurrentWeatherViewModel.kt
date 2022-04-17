@@ -5,12 +5,11 @@ import androidx.lifecycle.*
 import androidx.work.*
 import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.api.CurrentWeatherData
-import com.teddyDev.myweather.database.CurrentWeatherDAO
-import com.teddyDev.myweather.database.CurrentWeatherEntity
-import com.teddyDev.myweather.database.LocationEntity
+import com.teddyDev.myweather.database.dao.CurrentWeatherDAO
+import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
 import com.teddyDev.myweather.work.CurrentWeatherDataWork
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit

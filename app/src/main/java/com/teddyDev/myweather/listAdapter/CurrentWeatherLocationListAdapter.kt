@@ -2,7 +2,6 @@ package com.teddyDev.myweather.listAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teddyDev.myweather.R
-import com.teddyDev.myweather.database.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
 import com.teddyDev.myweather.databinding.*
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
 import com.teddyDev.myweather.service.getTimeFromMilliseconds

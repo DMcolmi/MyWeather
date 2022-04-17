@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.database.LocationEntity
+import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.ActivityAppWidgetConfigurationBinding
 import com.teddyDev.myweather.listAdapter.WidgetLocationListAdapter
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel

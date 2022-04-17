@@ -6,7 +6,7 @@ import android.content.Context
 import android.widget.RemoteViews
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.database.CurrentWeatherDAO
+import com.teddyDev.myweather.database.dao.CurrentWeatherDAO
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
 import com.teddyDev.myweather.service.getTimeFromMilliseconds
 import kotlinx.coroutines.CoroutineScope

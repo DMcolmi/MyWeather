@@ -1,11 +1,10 @@
 package com.teddyDev.myweather.service
 
-import androidx.lifecycle.MutableLiveData
 import com.teddyDev.myweather.api.CurrentWeatherData
+import com.teddyDev.myweather.api.ForecastWeatherData
 import com.teddyDev.myweather.api.LocationData
-import com.teddyDev.myweather.database.CurrentWeatherEntity
-import com.teddyDev.myweather.database.LocationEntity
-import java.util.*
+import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.LocationEntity
 
 fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previousWeatherEntity: CurrentWeatherEntity): CurrentWeatherEntity {
     return CurrentWeatherEntity(
@@ -34,7 +33,7 @@ fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previ
     )
 }
 
-fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : CurrentWeatherEntity{
+fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : CurrentWeatherEntity {
     return  CurrentWeatherEntity(
         name = locationData.name,
         country = locationData.country,
@@ -45,13 +44,40 @@ fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : Current
     )
 }
 
-fun fromLocationDataToEntity(locationData: LocationData): LocationEntity{
+fun fromLocationDataToEntity(locationData: LocationData): LocationEntity {
     return LocationEntity(
         name = locationData.name,
         country = locationData.country,
         lon = locationData.lon ?:"",
         lat = locationData.lat ?:"",
         state = locationData.state
+    )
+}
+
+fun fromForecastWeatherDataToCurrentWeatherEntity(forecastWeatherData: ForecastWeatherData, previousWeatherEntity: CurrentWeatherEntity){
+    CurrentWeatherEntity(
+        name = previousWeatherEntity.name,
+        country = previousWeatherEntity.country,
+        state = previousWeatherEntity.state,
+        weatherName = previousWeatherEntity.name,
+        weatherCountry = previousWeatherEntity.country,
+        lon = forecastWeatherData.lon.toString(),
+        lat = forecastWeatherData.lat.toString(),
+        windSpeed = forecastWeatherData.current.windSpeed,
+        windDeg = forecastWeatherData.current.windDeg,
+        temp = forecastWeatherData.current.temp,
+        feelsLike = forecastWeatherData.current.feelsLike,
+        tempMin = forecastWeatherData.daily[0].temp?.min,
+        tempMax = forecastWeatherData.daily[0].temp?.max,
+        pressure = forecastWeatherData.current.pressure,
+        humidity = forecastWeatherData.current.humidity,
+        sunrise = forecastWeatherData.current.sunrise,
+        sunset = forecastWeatherData.current.sunset,
+        description = forecastWeatherData.current.weather[0]?.description,
+        icon = forecastWeatherData.current.weather[0]?.icon,
+        visibility = forecastWeatherData.current.visibility,
+        timestamp = getStringTimestamp(),
+        widgetId = previousWeatherEntity.widgetId
     )
 }
 

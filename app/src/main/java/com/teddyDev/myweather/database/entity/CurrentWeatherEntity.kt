@@ -1,4 +1,4 @@
-package com.teddyDev.myweather.database
+package com.teddyDev.myweather.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -13,9 +13,7 @@ data class CurrentWeatherEntity (
     val lat :String?,
     val weatherName: String?= null,
     val weatherCountry: String?= null,
-    @ColumnInfo(name="wind_speed")
     val windSpeed :Double?= null,
-    @ColumnInfo(name = "wind_deg")
     val windDeg :Int?= null,
     val temp :Double?= null,
     val feelsLike :Double?= null,
@@ -30,6 +28,5 @@ data class CurrentWeatherEntity (
     val visibility :Int? = null,
     @ColumnInfo(defaultValue = "(CURRENT_TIMESTAMP)")
     var timestamp: String,
-    @ColumnInfo(name = "widget_id")
     var widgetId: Int? = null
 )

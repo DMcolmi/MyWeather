@@ -1,4 +1,4 @@
-package com.teddyDev.myweather.database
+package com.teddyDev.myweather.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

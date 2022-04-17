@@ -1,6 +1,7 @@
-package com.teddyDev.myweather.database
+package com.teddyDev.myweather.database.dao
 
 import androidx.room.*
+import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,7 +1,7 @@
 package com.teddyDev.myweather.service
 
 import com.teddyDev.myweather.api.LocationData
-import com.teddyDev.myweather.database.LocationEntity
+import com.teddyDev.myweather.database.entity.LocationEntity
 
 fun fromLocationEntityToData(locationEntity: LocationEntity): LocationData{
     return LocationData(

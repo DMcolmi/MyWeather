@@ -1,15 +1,10 @@
 package com.teddyDev.myweather.viewModel
 
-import android.location.Location
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.api.OpenWeatherApiService
-import com.teddyDev.myweather.database.LocationDAO
-import com.teddyDev.myweather.database.LocationEntity
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.*
+import com.teddyDev.myweather.database.dao.LocationDAO
+import com.teddyDev.myweather.database.entity.LocationEntity
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
