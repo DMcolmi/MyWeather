@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProvider
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProviderOpenW
 import com.teddyDev.myweather.databinding.WeatherMeteoListBinding
 import com.teddyDev.myweather.listAdapter.CurrentWeatherLocationListAdapter
 import com.teddyDev.myweather.service.fromCurrentWeatherEntityToLocationEntity
@@ -22,7 +24,8 @@ class WeatherListFragment : Fragment() {
 
     private val viewModel: LocationViewModel by activityViewModels {
         LocationViewModelFactory(
-            (activity?.application as WeatherApplication).appDatabase.getLocationDao()
+            (activity?.application as WeatherApplication).appDatabase.getLocationDao(),
+            WeatherDataProviderOpenW()
         )
     }
 

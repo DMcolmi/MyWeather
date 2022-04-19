@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.teddyDev.myweather.api.LocationData
+import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.SearchLocationItemBinding
 
-class SearchLocationListAdapter(private val addLocationLambda: (LocationData)->Unit): ListAdapter<LocationData,SearchLocationListAdapter.SearchLocationViewHolder>(DiffCallback) {
+class SearchLocationListAdapter(private val addLocationLambda: (LocationEntity)->Unit): ListAdapter<LocationEntity,SearchLocationListAdapter.SearchLocationViewHolder>(DiffCallback) {
 
     class SearchLocationViewHolder(private val binding: SearchLocationItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(lambdaToAddLocation: (LocationData)->Unit, locationData: LocationData){
+        fun bind(lambdaToAddLocation: (LocationEntity)->Unit, locationData: LocationEntity){
             binding.apply {
                 countryState.text = locationData.country + " - " + locationData.state
                 locationName.text = locationData.name
@@ -34,12 +34,12 @@ class SearchLocationListAdapter(private val addLocationLambda: (LocationData)->U
     }
 
     companion object{
-        private val DiffCallback = object: DiffUtil.ItemCallback<LocationData>(){
-            override fun areItemsTheSame(oldItem: LocationData, newItem: LocationData): Boolean {
+        private val DiffCallback = object: DiffUtil.ItemCallback<LocationEntity>(){
+            override fun areItemsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
                 return oldItem.name == newItem.name && oldItem.country == newItem.country
             }
 
-            override fun areContentsTheSame(oldItem: LocationData, newItem: LocationData): Boolean {
+            override fun areContentsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
                 return oldItem.name == newItem.name && oldItem.country == newItem.country
             }
 

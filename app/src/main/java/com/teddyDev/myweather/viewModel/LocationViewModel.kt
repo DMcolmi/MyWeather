@@ -1,6 +1,7 @@
 package com.teddyDev.myweather.viewModel
 
 import androidx.lifecycle.*
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProvider
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.database.dao.LocationDAO
@@ -9,7 +10,8 @@ import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 
-class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
+class LocationViewModel(private val locationDAO: LocationDAO,
+ private val weatherDataProvider :WeatherDataProvider): ViewModel() {
 
     val locationList : LiveData<List<LocationEntity>> = locationDAO.getAllLocations().asLiveData()
 
@@ -20,31 +22,23 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
     val isApiCalFinishedWithResult :LiveData<Boolean>
         get() = _isApiCalFinishedWithResult
 
-    private var _retrievedLocationFromApi: MutableLiveData<List<LocationData>> = MutableLiveData()
+    private var _retrievedLocationFromApi: MutableLiveData<List<LocationEntity>> = MutableLiveData()
 
-    val retrievedLocationFromApi: LiveData<List<LocationData>>
+    val retrievedLocationFromApi: LiveData<List<LocationEntity>>
         get() = _retrievedLocationFromApi
 
-    fun saveLocation(location: LocationData){
-        val locationEntity = LocationEntity(
-            name = location.name ?:"",
-            country = location.country ?:"",
-            lat = location.lat ?:"",
-            lon = location.lon ?:"",
-            state = location.state
-        )
 
+
+    fun saveLocation(location: LocationEntity){
         viewModelScope.launch {
-            locationDAO.insertNewLocation(locationEntity)
+            locationDAO.insertNewLocation(location)
         }
         newLocation = ""
     }
 
     fun searchLocation(location: String){
         viewModelScope.launch {
-            OpenWeatherApiService.OpenWeatherApi.openWeatherApiService.getLocation(
-                location
-            ).let { locationsFromApi ->
+            weatherDataProvider.getLocation(location).let { locationsFromApi ->
                 if(locationsFromApi.isNotEmpty()){
                     _retrievedLocationFromApi.value = locationsFromApi
                     _isApiCalFinishedWithResult.value = true
@@ -61,16 +55,17 @@ class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     fun clearFieldsToSearchNewLocation(){
         newLocation = ""
-        _retrievedLocationFromApi = MutableLiveData<List<LocationData>>()
+        _retrievedLocationFromApi = MutableLiveData<List<LocationEntity>>()
         _isApiCalFinishedWithResult.value = false
     }
 }
 
-class LocationViewModelFactory(private val locationDAO: LocationDAO): ViewModelProvider.Factory{
+class LocationViewModelFactory(private val locationDAO: LocationDAO,
+private val weatherDataProvider: WeatherDataProvider): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(LocationViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
-            return LocationViewModel(locationDAO) as T
+            return LocationViewModel(locationDAO, weatherDataProvider) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

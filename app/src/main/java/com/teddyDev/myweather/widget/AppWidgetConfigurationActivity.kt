@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProviderOpenW
 import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.ActivityAppWidgetConfigurationBinding
 import com.teddyDev.myweather.listAdapter.WidgetLocationListAdapter
@@ -30,7 +31,8 @@ class AppWidgetConfigurationActivity : AppCompatActivity() {
 
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory(
-            (application as WeatherApplication).appDatabase.getLocationDao()
+            (application as WeatherApplication).appDatabase.getLocationDao(),
+            WeatherDataProviderOpenW()
         )
     }
 

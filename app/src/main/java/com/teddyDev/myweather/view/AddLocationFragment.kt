@@ -12,10 +12,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.api.LocationData
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProviderOpenW
+import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
-import com.teddyDev.myweather.service.fromLocationDataToCurrentWeatherEntity
+import com.teddyDev.myweather.service.fromLocationEntityToCurrentWeatherEntity
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModel
 import com.teddyDev.myweather.viewModel.CurrentWeatherViewModelFactory
 import com.teddyDev.myweather.viewModel.LocationViewModel
@@ -25,7 +26,8 @@ class AddLocationFragment: Fragment() {
 
     private val viewModel: LocationViewModel by activityViewModels {
         LocationViewModelFactory(
-            (activity?.application as WeatherApplication).appDatabase.getLocationDao()
+            (activity?.application as WeatherApplication).appDatabase.getLocationDao(),
+            WeatherDataProviderOpenW()
         )
     }
 
@@ -72,9 +74,9 @@ class AddLocationFragment: Fragment() {
         hideSoftKey(view)
     }
 
-    private fun addLocationWeatherDataAndNavigateBack(location: LocationData){
+    private fun addLocationWeatherDataAndNavigateBack(location: LocationEntity){
         viewModel.saveLocation(location)
-        currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(fromLocationDataToCurrentWeatherEntity(location))
+        currentWeatherViewModel.updateCurrentWeatherDataForThisLocation(fromLocationEntityToCurrentWeatherEntity(location))
         navigateToWeatherListFragment()
     }
 
