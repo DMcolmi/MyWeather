@@ -8,7 +8,7 @@ import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
 import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
 import com.teddyDev.myweather.database.entity.LocationEntity
 
-fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previousWeatherEntity: CurrentWeatherEntity): CurrentWeatherEntity {
+fun fromCurrentWeatherDataToEntityOld(currentWeatherData: CurrentWeatherData, previousWeatherEntity: CurrentWeatherEntity): CurrentWeatherEntity {
     return CurrentWeatherEntity(
         name = previousWeatherEntity.name,
         country = previousWeatherEntity.country,
@@ -36,6 +36,33 @@ fun fromCurrentWeatherDataToEntity(currentWeatherData: CurrentWeatherData, previ
     )
 }
 
+fun fromCurrentWeatherDataToEntity2(currentWeatherData: CurrentWeatherData): CurrentWeatherEntity {
+    return CurrentWeatherEntity(
+        name = "",
+        country = "",
+        state = "",
+        weatherName = currentWeatherData.name,
+        weatherCountry = currentWeatherData.sys.country,
+        lon = currentWeatherData.coord.lon.toString(),
+        lat = currentWeatherData.coord.lat.toString(),
+        windSpeed = currentWeatherData.wind?.speed,
+        windDeg = currentWeatherData.wind?.deg,
+        temp = currentWeatherData.main?.temp,
+        feelsLike = currentWeatherData.main?.feelsLike,
+        tempMin = currentWeatherData.main?.tempMin,
+        tempMax = currentWeatherData.main?.tempMax,
+        pressure = currentWeatherData.main?.pressure,
+        humidity = currentWeatherData.main?.humidity,
+        sunrise = currentWeatherData.sys?.sunrise,
+        sunset = currentWeatherData.sys?.sunset,
+        description = currentWeatherData.weather[0]?.description,
+        icon = currentWeatherData.weather[0]?.icon,
+        visibility = currentWeatherData.visibility,
+        timestamp = getStringTimestamp(),
+        hash = 0
+    )
+}
+
 fun fromLocationDataToCurrentWeatherEntity(locationData: LocationData) : CurrentWeatherEntity {
     return  CurrentWeatherEntity(
         name = locationData.name,
@@ -54,12 +81,13 @@ fun fromLocationDataToEntity(locationData: LocationData): LocationEntity {
         country = locationData.country,
         lon = locationData.lon ?:"",
         lat = locationData.lat ?:"",
-        state = locationData.state
+        state = locationData.state,
+        hash = getHash(locationData.name,locationData.country)
     )
 }
 
-fun fromForecastWeatherDataToCurrentWeatherEntity(forecastWeatherData: ForecastWeatherData, previousWeatherEntity: CurrentWeatherEntity){
-    CurrentWeatherEntity(
+fun fromForecastWeatherDataToCurrentWeatherEntity(forecastWeatherData: ForecastWeatherData, previousWeatherEntity: CurrentWeatherEntity) : CurrentWeatherEntity{
+    return CurrentWeatherEntity(
         name = previousWeatherEntity.name,
         country = previousWeatherEntity.country,
         state = previousWeatherEntity.state,
@@ -86,8 +114,8 @@ fun fromForecastWeatherDataToCurrentWeatherEntity(forecastWeatherData: ForecastW
     )
 }
 
-fun fromForecastWeatherDataToEntity(hourlyForecastWeatherData: Hourly, currentWeatherEntity: CurrentWeatherEntity){
-    HourlyForecastWeatherEntity(
+fun fromForecastWeatherDataToEntity(hourlyForecastWeatherData: Hourly, currentWeatherEntity: CurrentWeatherEntity): HourlyForecastWeatherEntity{
+    return HourlyForecastWeatherEntity(
         name = currentWeatherEntity.name,
         country = currentWeatherEntity.country,
         state = currentWeatherEntity.state,

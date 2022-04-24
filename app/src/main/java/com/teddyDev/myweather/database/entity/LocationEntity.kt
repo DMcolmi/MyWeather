@@ -11,6 +11,8 @@ data class LocationEntity(
     val country: String,
     val lat: String,
     val lon: String,
-    val state: String?
+    val state: String?,
+    val hash: Int,
+    var widgetId: Int? = null,
 )
 

@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.teddyDev.myweather.WeatherApplication
+import com.teddyDev.myweather.aWeatherDataProviderService.WeatherDataService
 import com.teddyDev.myweather.api.OpenWeatherApiService
-import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntity
+import com.teddyDev.myweather.service.fromCurrentWeatherDataToEntityOld
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,8 +28,11 @@ class CurrentWeatherDataWork(context: Context, workerParameters: WorkerParameter
                         )
 
                         currentWeatherDataFromApi.let {
-                            val currentWeatherEntity = fromCurrentWeatherDataToEntity(it,currentWeatherToBeUpdated)
+                            val currentWeatherEntity = fromCurrentWeatherDataToEntityOld(it,currentWeatherToBeUpdated)
                             currentWeatherDAO.insertOrUpdateCurrentWeather(currentWeatherEntity)
+                            val forecastList = WeatherDataService.getUpdatedHourlyForecast(currentWeatherEntity)
+                            currentWeatherDAO.deleteOldForecast(currentWeatherEntity.name, currentWeatherEntity.country)
+                            currentWeatherDAO.insertForecast(forecastList)
                         }
                     }
 

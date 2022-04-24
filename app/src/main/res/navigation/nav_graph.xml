@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_meteoListFragment_to_addLocationFragment"
             app:destination="@id/addLocationFragment" />
-        <action
-            android:id="@+id/action_meteoListFragment_to_composeTestFragment"
-            app:destination="@id/composeTestFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLocationFragment"
@@ -27,14 +24,5 @@
             app:destination="@id/meteoListFragment"
             app:popUpTo="@id/meteoListFragment"
             app:popUpToInclusive="true"/>
-    </fragment>
-    <fragment
-        android:id="@+id/composeTestFragment"
-        android:name="com.teddyDev.myweather.view.ComposeTestFragment"
-        android:label="fragment_compose_test"
-        tools:layout="@layout/fragment_compose_test" >
-        <action
-            android:id="@+id/action_composeTestFragment_to_meteoListFragment"
-            app:destination="@id/meteoListFragment" />
     </fragment>
 </navigation>

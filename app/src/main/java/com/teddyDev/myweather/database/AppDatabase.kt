@@ -10,7 +10,7 @@ import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
 import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
 import com.teddyDev.myweather.database.entity.LocationEntity
 
-@Database(entities = [LocationEntity::class, CurrentWeatherEntity::class, HourlyForecastWeatherEntity::class], version = 8, exportSchema = false)
+@Database(entities = [LocationEntity::class, CurrentWeatherEntity::class, HourlyForecastWeatherEntity::class], version = 11, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getLocationDao(): LocationDAO

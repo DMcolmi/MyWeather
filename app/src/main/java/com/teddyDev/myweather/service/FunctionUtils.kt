@@ -16,7 +16,7 @@ fun getStringTimestamp(): String {
 fun getTimeFromMilliseconds(milliseconds: Long?):String{
     val stringBuilder = StringBuilder()
     milliseconds?.let {
-        val formatter = SimpleDateFormat("HH:mm:ss")
+        val formatter = SimpleDateFormat("dd/MM HH:mm")
         stringBuilder.append(formatter.format(Date(milliseconds*1000)))
     }
     return stringBuilder.toString()

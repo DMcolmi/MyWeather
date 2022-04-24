@@ -2,6 +2,7 @@ package com.teddyDev.myweather.viewModel
 
 import androidx.lifecycle.*
 import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProvider
+import com.teddyDev.myweather.aWeatherDataProviderService.WeatherDataService
 import com.teddyDev.myweather.api.LocationData
 import com.teddyDev.myweather.api.OpenWeatherApiService
 import com.teddyDev.myweather.database.dao.LocationDAO
@@ -10,8 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 
-class LocationViewModel(private val locationDAO: LocationDAO,
- private val weatherDataProvider :WeatherDataProvider): ViewModel() {
+class LocationViewModel(private val locationDAO: LocationDAO): ViewModel() {
 
     val locationList : LiveData<List<LocationEntity>> = locationDAO.getAllLocations().asLiveData()
 
@@ -38,7 +38,7 @@ class LocationViewModel(private val locationDAO: LocationDAO,
 
     fun searchLocation(location: String){
         viewModelScope.launch {
-            weatherDataProvider.getLocation(location).let { locationsFromApi ->
+            WeatherDataService.getLocation(location).let { locationsFromApi ->
                 if(locationsFromApi.isNotEmpty()){
                     _retrievedLocationFromApi.value = locationsFromApi
                     _isApiCalFinishedWithResult.value = true
@@ -60,12 +60,11 @@ class LocationViewModel(private val locationDAO: LocationDAO,
     }
 }
 
-class LocationViewModelFactory(private val locationDAO: LocationDAO,
-private val weatherDataProvider: WeatherDataProvider): ViewModelProvider.Factory{
+class LocationViewModelFactory(private val locationDAO: LocationDAO): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(LocationViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
-            return LocationViewModel(locationDAO, weatherDataProvider) as T
+            return LocationViewModel(locationDAO) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

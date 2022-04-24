@@ -21,6 +21,7 @@ class CurrentWeatherLocationListAdapter(private val deleteLocationLambda: (Curre
 ){
 
     class LocationViewHolder(private var binding: WeatherItemBinding): RecyclerView.ViewHolder(binding.root){
+
         fun bind(onClickDeleteLocationLambda: (CurrentWeatherEntity) -> Unit, updateLocationWeather: (CurrentWeatherEntity) -> Unit, weatherLocation: CurrentWeatherEntity){
             binding.apply {
                 locationName.text = weatherLocation.name + " - " + weatherLocation.country + " - " + weatherLocation.state

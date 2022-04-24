@@ -41,7 +41,7 @@ interface OpenWeatherApiService {
 
     ): CurrentWeatherData
 
-    @GET("data/2.5/weather")
+    @GET("data/2.5/onecall")
     suspend fun getForecastWeatherData(
         @Query("lat") lat: String,
         @Query("lon") lon: String,

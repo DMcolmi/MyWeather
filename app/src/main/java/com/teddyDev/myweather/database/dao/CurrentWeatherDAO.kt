@@ -4,6 +4,7 @@ import androidx.room.*
 import com.teddyDev.myweather.database.entity.CurrentAndForecastWeather
 import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
 import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
+import com.teddyDev.myweather.database.entity.LocationAndWeather
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -30,7 +31,15 @@ interface CurrentWeatherDAO {
     @Query("update t_current_weather set widgetId = null where widgetId = :widgetId")
     suspend fun removeWidgetIdFromEntity(widgetId: Int)
 
-    @Query("select * from t_current_weather where name = :name and country = :country")
-    fun getCurrentAndHourlyForecast(name: String, country: String): Flow<CurrentAndForecastWeather>
+    @Transaction
+    @Query("select * from t_current_weather")
+    fun getCurrentAndHourlyForecast(): Flow<List<CurrentAndForecastWeather>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertForecast(forecast: List<HourlyForecastWeatherEntity>)
+
+    @Query("delete from t_hourly_forecast where name = :name and country = :country")
+    suspend fun deleteOldForecast(name: String, country: String)
+
 
 }

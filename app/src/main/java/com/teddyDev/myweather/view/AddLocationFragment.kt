@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.WeatherApplication
-import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProviderOpenW
+import com.teddyDev.myweather.aWeatherDataProvider.WeatherDataProviderOpenWeather
 import com.teddyDev.myweather.database.entity.LocationEntity
 import com.teddyDev.myweather.databinding.FragmentAddLocationBinding
 import com.teddyDev.myweather.listAdapter.SearchLocationListAdapter
@@ -26,8 +26,7 @@ class AddLocationFragment: Fragment() {
 
     private val viewModel: LocationViewModel by activityViewModels {
         LocationViewModelFactory(
-            (activity?.application as WeatherApplication).appDatabase.getLocationDao(),
-            WeatherDataProviderOpenW()
+            (activity?.application as WeatherApplication).appDatabase.getLocationDao()
         )
     }
 

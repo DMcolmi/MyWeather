@@ -2,8 +2,8 @@ package com.teddyDev.myweather.api
 
 data class ForecastWeatherData (
 
-    var lat : Double,
-    var lon : Double,
+    var lat : Double?,
+    var lon : Double?,
     var timezone : String?,
     var timezoneOffset : Int?,
     var current : Current = Current(),
@@ -45,7 +45,7 @@ data class Hourly (
     var windDeg : Int? = null,
     var windQust : Double? = null,
     var weather : List<Weather>? = null,
-    var pop : Int? = null,
+    var pop : Double? = null,
     var rain : Rain? = null
 )
 
@@ -67,7 +67,7 @@ data class Daily (
     var windQust : Int? = null,
     var weather : List<Weather>? = null,
     var clouds : Int? = null,
-    var pop : Int? = null,
+    var pop : Double? = null,
     var rain : Double? = null,
     var uvi : Double? = null
 )

@@ -3,8 +3,8 @@ package com.teddyDev.myweather.database.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 
-@Entity(tableName = "t_hourly_forecast", primaryKeys = ["name","country","dt"], foreignKeys = [ForeignKey(entity = CurrentWeatherEntity::class, parentColumns = ["name","country"],childColumns = ["name","country"] )])
-data class HourlyForecastWeatherEntity (
+@Entity(tableName = "t_hourly_forecast", primaryKeys = ["name","country","dt"])
+class HourlyForecastWeatherEntity (
     //fields for mapping with other tables
     val name: String,
     val country: String,
@@ -26,7 +26,7 @@ data class HourlyForecastWeatherEntity (
     val windSpeed : Double? = null,
     val windDeg : Int? = null,
     val windQust : Double? = null,
-    val pop : Int? = null,
+    val pop : Double? = null,
 
     //weather
     val id : Int? = null,
