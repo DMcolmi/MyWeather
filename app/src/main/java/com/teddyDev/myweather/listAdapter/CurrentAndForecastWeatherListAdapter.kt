@@ -2,11 +2,14 @@ package com.teddyDev.myweather.listAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teddyDev.myweather.R
 import com.teddyDev.myweather.database.entity.CurrentAndForecastWeather
 import com.teddyDev.myweather.database.entity.CurrentWeatherEntity
+import com.teddyDev.myweather.database.entity.HourlyForecastWeatherEntity
 import com.teddyDev.myweather.databinding.*
 import com.teddyDev.myweather.service.getHyphenIfDoubleNull
 import com.teddyDev.myweather.service.getTimeFromMilliseconds
@@ -73,61 +77,32 @@ class CurrentAndForecastWeatherListAdapter(
                     root.context.getString(R.string.weather_humidity, currentWeather.humidity)
 
                 weatherGraph.setContent {
-                    val scrollState = rememberLazyListState()
-                    val coroutineScope = rememberCoroutineScope()
-                    var index = 0
-
-                    fun increaseIndex(){
-                        if (index + 5 < 48)
-                            index += 5
-                    }
-
                     MaterialTheme {
-                        Row(modifier = Modifier
-                            .height(200.dp)
-                            .padding(16.dp)) {
-                            Column() {
-                                OutlinedButton(  onClick = {
-                                    coroutineScope.launch {
-                                        index = 0
-                                        scrollState.animateScrollToItem(index)
-                                    }
-                                }) {
-                                    Text(text = "U")
-                                }
-                                OutlinedButton(onClick = {
-                                    increaseIndex()
-                                    coroutineScope.launch {
-                                        scrollState.animateScrollToItem(index)
-                                    }
-                                }) {
-                                    Text(text = "D")
-                                }
-                            }
-                        Divider(modifier = Modifier.size(16.dp))
-                        LazyColumn(
-                            state = scrollState
-                        ) {
-                            items(forecast) { hourlyForecast ->
-                                Row() {
-                                    Text(text = getTimeFromMilliseconds(hourlyForecast.dt.toLong()),
-                                        color = Color.White)
-                                    Divider(modifier = Modifier.size(5.dp))
-                                    Text(text = stringResource(R.string.weather_temperature,
-                                        hourlyForecast.temp ?: 0.0), color = Color.White)
-                                    Divider(modifier = Modifier.size(5.dp))
-                                    Text(text = hourlyForecast.description ?: "",
-                                        color = Color.White)
+                        Row(modifier = Modifier.horizontalScroll(rememberScrollState()).padding(8.dp)){
+                            forecast.forEach { hourlyForecast ->
+                                Column(modifier = Modifier.padding(8.dp)) {
+                                    ForecastChip(hourlyForecast)
                                 }
                             }
                         }
-                    }
                 }
-
             }
         }
     }
+        @Composable
+        fun ForecastChip(hourlyForecast : HourlyForecastWeatherEntity){
+            Text(text = getTimeFromMilliseconds(hourlyForecast.dt.toLong()),
+                color = Color.White)
+            Divider(modifier = Modifier.size(2.dp))
+            Text(text = stringResource(R.string.weather_temperature,
+                hourlyForecast.temp ?: 0.0), color = Color.White)
+            Divider(modifier = Modifier.size(2.dp))
+            Text(text = hourlyForecast.description ?: "",
+                color = Color.White)
+        }
 }
+
+
 
 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
     val binding: WeatherItemBinding =
